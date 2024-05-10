@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      max-width: 200%;  /* Twice as wide */
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      margin-bottom: 40px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+      font-size: 18px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;  
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 18px;
+    }
+
+    textarea {
+      height: 200px;
+    }
+
+    .button-container {
+      text-align: center; /* Center-align buttons */
+      margin-top: 20px;
+    }
+
+    button {
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 20px 40px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    button[type="submit"] {
+      background-color: #28a745;
+    }
+
+    button.remove {
+      background-color: #ff0000; /* Red color for remove button */
+    }
+
+    button.update {
+      background-color: #007bff; /* Blue color for update button */
+    }
+
+    button#generateReport {
+      background-color: #ffc107; /* Yellow color for Generate Report button */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>__________ Gestion Des Taches __________</h1>
+    <form id="employeeForm">
+      <label for="employer">Employer:</label>
+      <input type="text" id="employer" name="employer" required>
+      
+      <label for="employeeName">Employee Name:</label>
+      <input type="text" id="employeeName" name="employeeName" required>
+      
+      <label for="position">Position:</label>
+      <input type="text" id="position" name="position" required>
+      
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" name="startDate" required>
+      
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate">
+      
+      <label for="responsibilities">Responsibilities:</label>
+      <textarea id="responsibilities" name="responsibilities" required></textarea>
+      
+      <label for="completed">Completed:</label>
+      <input type="checkbox" id="completed" name="completed">
+      
+      <label for="missingResponsibilities" id="missingResponsibilitiesLabel">Missing Responsibilities:</label>
+      <textarea id="missingResponsibilities" name="missingResponsibilities"></textarea>
+      
+      <label for="grade">Grade (out of 20):</label>
+      <input type="number" id="grade" name="grade" min="0" max="20">
+      
+      <!-- Buttons to remove, update tasks, and generate report -->
+      <div class="button-container">
+        <button type="submit">Submit</button>
+        <button type="button" class="remove">Remove Task</button>
+        <button type="button" class="update">Update Task</button>
+        <button type="button" id="generateReport">Generate Report</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('completed').addEventListener('change', function() {
+      var missingResponsibilitiesField = document.getElementById('missingResponsibilities');
+      var missingResponsibilitiesLabel = document.getElementById('missingResponsibilitiesLabel');
+
+      if (this.checked) {
+        missingResponsibilitiesField.style.display = 'none';
+        missingResponsibilitiesLabel.style.display = 'none';
+      } else {
+        missingResponsibilitiesField.style.display = 'block';
+        missingResponsibilitiesLabel.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

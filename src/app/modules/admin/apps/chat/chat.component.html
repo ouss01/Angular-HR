@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp-like Chat App</title>
+  <style>
+    /* Chat container */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Chat messages */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      max-width: 70%;
+    }
+
+    .sent {
+      align-self: flex-end;
+      background-color: #DCF8C6;
+    }
+
+    .received {
+      align-self: flex-start;
+      background-color: #E5E5EA;
+    }
+
+    /* Chat input */
+    .chat-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #F5F5F5;
+    }
+
+    .chat-input input[type="file"] {
+      display: none;
+    }
+
+    .chat-input input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #CCCCCC;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .chat-input button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 50%;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    .chat-input button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Placeholder images */
+    .placeholder-image {
+      width: 100px;
+      height: 100px;
+      background-color: #CCCCCC;
+      margin: 0 10px 10px 0;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-messages">
+      <div class="message sent">
+        <p>Hello!</p>
+      </div>
+      <div class="message received">
+        <p>Hi there!</p>
+        <div class="placeholder-image"></div>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="file" id="imageInput" style="display: none;" accept="image/*" capture="camera">
+      <button onclick="document.getElementById('imageInput').click();">Add Files</button>
+      <button onclick="captureFromCamera()">Take a Photo</button>
+      <input type="text" placeholder="Type your message...">
+      <button>Send</button>
+    </div>
+  </div>
+
+  <script>
+    function captureFromCamera() {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function(stream) {
+            // Do something with the camera stream, like taking a photo
+            console.log('Camera access granted');
+          })
+          .catch(function(error) {
+            console.error('Camera access denied:', error);
+            alert('Camera access denied. Please allow camera access to take photos.');
+          });
+      } else {
+        console.error('getUserMedia not supported on your browser');
+        alert('Camera access not supported on your browser.');
+      }
+    }
+  </script>
+</body>
+</html>
