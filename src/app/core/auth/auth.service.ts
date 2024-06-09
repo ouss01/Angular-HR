@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { environments } from 'environments/environments';
+import { catchError, Observable, of, switchMap, tap, throwError } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
 {
+    url = environments.EmployeeApp;
     private _authenticated: boolean = false;
     private _httpClient = inject(HttpClient);
     private _userService = inject(UserService);
@@ -57,7 +59,7 @@ export class AuthService
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any>
+    signIn(credentials: { username: string; password: string }): Observable<any>
     {
         // Throw error, if the user is already logged in
         if ( this._authenticated )
@@ -65,24 +67,16 @@ export class AuthService
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
-            switchMap((response: any) =>
-            {
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
-
-                // Set the authenticated flag to true
-                this._authenticated = true;
-
-                // Store the user on the user service
-                this._userService.user = response.user;
-
-                // Return a new observable with the response
-                return of(response);
-            }),
-        );
+        return this._httpClient.post(this.url +'/login/', credentials)
+            .pipe(tap(tokens => this.saveTokens(tokens)));
+        ;
     }
-
+    private saveTokens(tokens: any) {
+        localStorage.setItem('access_token', tokens.access_token);
+        localStorage.setItem('refresh_token', tokens.refresh_token);
+        console.log(tokens)
+        this._authenticated = true;
+      }
     /**
      * Sign in using the access token
      */
@@ -143,10 +137,12 @@ export class AuthService
      *
      * @param user
      */
-    signUp(user: { name: string; email: string; password: string; company: string }): Observable<any>
-    {
-        return this._httpClient.post('api/auth/sign-up', user);
-    }
+  
+    signUp(CustomUser:any) {
+        // Adjust the URL based on your actual backend endpoint
+        return this._httpClient.post<any>('http://localhost:8000/api/register/', CustomUser);
+      }
+    
 
     /**
      * Unlock session

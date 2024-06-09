@@ -1,6 +1,6 @@
 import { CurrencyPipe, DecimalPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { CryptoService } from 'app/modules/admin/dashboards/crypto/crypto.service';
+import { EmployeeService } from 'app/services/employee.service';
 import { DateTime } from 'luxon';
 import { ApexOptions, ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
@@ -20,7 +21,7 @@ import { Subject, takeUntil } from 'rxjs';
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [MatSidenavModule, NgFor, MatIconModule, NgClass, NgApexchartsModule, MatFormFieldModule, MatSelectModule, MatOptionModule, NgIf, FormsModule, MatInputModule, MatButtonModule, UpperCasePipe, DecimalPipe, CurrencyPipe],
+    imports        : [MatSidenavModule,ReactiveFormsModule , NgFor, MatIconModule, NgClass, NgApexchartsModule, MatFormFieldModule, MatSelectModule, MatOptionModule, NgIf, FormsModule, MatInputModule, MatButtonModule, UpperCasePipe, DecimalPipe, CurrencyPipe],
 })
 export class CryptoComponent implements OnInit, OnDestroy
 {
@@ -32,11 +33,11 @@ export class CryptoComponent implements OnInit, OnDestroy
     drawerOpened: boolean = true;
     watchlistChartOptions: ApexOptions = {};
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+    employeeForm:any=FormGroup
     /**
      * Constructor
      */
-    constructor(
+    constructor( private fb:FormBuilder,private employeeservice:EmployeeService,
         private _cryptoService: CryptoService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
@@ -53,6 +54,31 @@ export class CryptoComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+
+        this.employeeForm = this.fb.group({
+           
+            firstName: ['', Validators.required],
+            matricule: ['', Validators.required],
+            lastName: ['', Validators.required],
+            dateOfBirth: ['', Validators.required],
+            position: ['', Validators.required],
+            department: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            startDate: ['', Validators.required],
+            contractType: ['', Validators.required],
+            sanctions: [''],
+           handicap: [''],
+            salary: ['', Validators.required],
+            currency: ['', Validators.required],
+            employeeCarreerHistory: [''],
+            parentId: [''],
+            emplacement: [''],
+            photo: [''],
+            cv: [''],
+            performanceRate: ['']
+          });
+        
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -96,7 +122,26 @@ export class CryptoComponent implements OnInit, OnDestroy
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-
+    submitForm(): void {
+        if (this.employeeForm.valid) {
+          const formData = new FormData();
+          Object.keys(this.employeeForm.value).forEach(key => {
+            formData.append(key, this.employeeForm.value[key]);
+          });
+    
+          this.employeeservice.addEmployee(formData).subscribe(
+            response => {
+              console.log('Employee added successfully:', response);
+              // Reset form after successful submission
+              this.employeeForm.reset();
+            },
+            error => {
+              console.error('Error adding employee:', error);
+              // Handle error as needed
+            }
+          );
+        }
+      }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------

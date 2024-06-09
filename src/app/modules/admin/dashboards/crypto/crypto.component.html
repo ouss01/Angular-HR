@@ -87,35 +87,36 @@
 </head>
 <body>
   <div class="container">
-    <h1>_____ Add Employees To Your Company _____</h1>
-    <form id="addEmployeeForm" method="POST" action="{% url 'your_submit_url' %}">
-      <!-- Employee Information -->
-      <label for="employeeID">Employee ID:</label>
-      <input type="number" id="employeeID" name="employeeID" required><br>
 
+<form [formGroup]="employeeForm">
+      <h1>_____ Add Employees To Your Company _____</h1>
+      
+     
       <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" name="firstName" required><br>
-
+      <input type="text" id="firstName" formControlName="firstName" required>
+     <label for="employeeID">Employee ID:</label>
+      <input type="number" id="employeeID" formControlName="matricule" required>
+    
       <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" name="lastName" required><br>
-
+      <input type="text" id="lastName" formControlName="lastName" required>
+    
       <label for="dateOfBirth">Date of Birth:</label>
-      <input type="date" id="dateOfBirth" name="dateOfBirth" required><br>
-
+      <input type="date" id="dateOfBirth" formControlName="dateOfBirth" required>
+    
       <label for="position">Position:</label>
-      <input type="text" id="position" name="position" required><br>
-
+      <input type="text" id="position" formControlName="position" required>
+    
       <label for="department">Department:</label>
-      <input type="text" id="department" name="department" required><br>
-
+      <input type="text" id="department" formControlName="department" required>
+    
       <label for="email">Email:</label>
-      <input type="text" id="email" name="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required><br>
-
+      <input type="text" id="email" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+    
       <label for="startDate">Start Date:</label>
-      <input type="date" id="startDate" name="startDate" required><br>
-
+      <input type="date" id="startDate" formControlName="startDate" required>
+    
       <label for="contractType">Contract Type:</label>
-      <select name="contractType" id="contractType" required>
+      <select id="contractType" formControlName="contractType" required>
         <option value="CDI">Contrat à durée indéterminée (CDI)</option>
         <option value="CDD">Contrat à durée déterminée (CDD)</option>
         <option value="CDD_OD">CDD à objet défini</option>
@@ -123,65 +124,62 @@
         <option value="CTP">Contrat de travail à temps partiel</option>
         <option value="CTI">Contrat de travail intermittent</option>
         <option value="CTS">Contrat de travail saisonnier</option>
-      </select><br>
-
-
+      </select>
+    
       <label for="sanctions">Sanctions:</label>
-      <textarea id="sanctions" name="sanctions" required></textarea><br>
-
-      <label for="handicap">Voluntary self-identification of disability:</label><br>
-
+      <textarea id="sanctions" formControlName="sanctions" required></textarea>
+    
+      <label>Voluntary self-identification of disability:</label>
       <label>
-        <input type="checkbox" name="handicap" value="yes">
+        <input type="checkbox" formControlName="handicap" value="yes">
         YES, I HAVE A DISABILITY
-      </label><br>
-
+      </label>
       <label>
-        <input type="checkbox" name="handicap" value="no">
+        <input type="checkbox" formControlName="handicap" value="no">
         NO, I DON'T HAVE A DISABILITY
-      </label><br>
-
+      </label>
       <label>
-        <input type="checkbox" name="handicap" value="not_answer">
+        <input type="checkbox" formControlName="handicap" value="not_answer">
         NO, I DON'T WISH TO ANSWER
-      </label><br>
-
+      </label>
+    
       <label for="salary">Salary:</label>
-      <input type="number" id="salary" name="salary" required>
-
+      <input type="number" id="salary" formControlName="salary" required>
+    
       <label for="currency">Currency:</label>
-      <select name="currency" id="currency">
+      <select id="currency" formControlName="currency">
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="GBP">GBP</option>
         <option value="CHF">CHF</option>
       </select>
-
+    
       <label for="employeeCarreerHistory">Employee Career History:</label>
-      <textarea id="employeeCarreerHistory" name="employeeCarreerHistory" required></textarea><br>
-
+      <textarea id="employeeCarreerHistory" formControlName="employeeCarreerHistory" required></textarea>
+    
       <label for="level">Level:</label>
-      <input type="number" id="level" name="level" required><br>
-
+      <input type="number" id="level" formControlName="parentId" required>
+    
       <label for="emplacement">Emplacement:</label>
-      <input type="text" id="emplacement" name="emplacement" required><br>
-
+      <input type="text" id="emplacement" formControlName="emplacement" required>
+    
       <label for="photo">Photo:</label>
-      <input type="file" id="photo" name="photo"><br>
-
-      <label for="cv">CV (PDF only):</label><br>
-      <input type="file" id="cv" name="cv" accept=".pdf">
-
+      <input type="file" id="photo" formControlName="photo">
+    
+      <label for="cv">CV (PDF only):</label>
+      <input type="file" id="cv" formControlName="cv" accept=".pdf">
+    
       <label for="performanceRate">Performance Rate:</label>
-      <input type="number" id="performanceRate" name="performanceRate"><br>
-
+      <input type="number" id="performanceRate" formControlName="performanceRate">
+    
       <!-- Button to view all employees -->
       <div class="button-container">
-        <button type="submit">Add Employee</button>
+        <button type="submit" (click)="submitForm()">Add Employee</button>
         <button type="button" class="blue">View All Employees</button>
         <button type="button" class="red">Remove Employee</button>
       </div>
     </form>
+    
   </div>
 </body>
 </html>

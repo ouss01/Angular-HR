@@ -16,4 +16,8 @@ export class EmployeeService {
   getEmployees(){
     return this.httpclient.get(this.url + "/employees/")
   } 
+
+  addEmployee(data:any) {
+    return this.httpclient.post(this.url+'/employees/',data)
+  }
 }

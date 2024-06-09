@@ -1,34 +1,48 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, ViewEncapsulation } from "@angular/core";
-import { EquipeService } from "app/services/equipe.service";
 import { OrgChart } from "d3-org-chart";
+
+import { EmployeeService } from "app/services/employee.service";
 
 @Component({
   selector: "app-d3-org-chart",
   templateUrl: "./d3-org-chart.component.html",
   styleUrls: ["./d3-org-chart.component.scss"],
   encapsulation: ViewEncapsulation.None,
-  standalone:true
+  standalone: true
 })
 export class D3OrgChartComponent implements OnInit {
   @ViewChild("chartContainer", { static: true }) chartContainer: ElementRef;
   @Input() data: any[];
   chart: OrgChart;
 
-  constructor(private equipeService: EquipeService) {}
+  constructor(private equipeService: EmployeeService) {}
 
   ngOnInit() {
     this.fetchData();
   }
 
   fetchData() {
-    this.equipeService.getEquipe().subscribe(
+    this.equipeService.getEmployees().subscribe(
       (data: any[]) => {
-        this.data = data;
-        this.updateChart();
+        // Transform data if necessary
+        this.data = data.map(employee => ({
+          id: employee.id,
+          name: `${employee.firstName} ${employee.lastName}`,
+          position: employee.position,
+          image: employee.photo,  // Assuming the image URL is stored in the photo field
+          parentId: employee.parentId  // Assuming parentId is stored in the employee data
+        }));
+
+        // Check for multiple roots
+        const rootCount = this.data.filter(emp => emp.parentId === null).length;
+        if (rootCount !== 1) {
+          console.error("Error: The data has multiple root nodes or no root node.", this.data);
+        } else {
+          this.updateChart();
+        }
       },
-      (error) => {
-        console.error('Error fetching equipe data:', error);
-        // Handle error appropriately, e.g., show error message to user
+      error => {
+        console.error("Error fetching employee data:", error);
       }
     );
   }
@@ -43,14 +57,14 @@ export class D3OrgChartComponent implements OnInit {
       console.log('Data is empty');
       return;
     }
-    if (!this.chart) {
+    if (!this.chart || !this.chartContainer || !this.chartContainer.nativeElement) {
+      console.log('Chart or chart container is not initialized');
       return;
     }
     this.chart
       .container(this.chartContainer.nativeElement)
       .data(this.data)
       .nodeContent((node) => {
-        // Your node content generation logic
         const color = '#FFFFFF';
         const imageDiffVert = 25 + 2;
         return `

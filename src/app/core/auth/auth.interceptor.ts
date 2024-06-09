@@ -29,6 +29,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
     {
         newReq = req.clone({
             headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken),
+            
         });
     }
 
@@ -39,6 +40,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             // Catch "401 Unauthorized" responses
             if ( error instanceof HttpErrorResponse && error.status === 401 )
             {
+                console.log(error)
                 // Sign out
                 authService.signOut();
 

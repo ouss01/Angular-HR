@@ -32,26 +32,52 @@
                 class="mt-8"
                 [formGroup]="signUpForm"
                 #signUpNgForm="ngForm">
-
-                <!-- Name field -->
                 <mat-form-field class="w-full">
                     <mat-label>Full name</mat-label>
                     <input
                         id="name"
                         matInput
-                        [formControlName]="'name'">
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                        formControlName="username">
+                    <mat-error *ngIf="signUpForm.get('username').hasError('required')">
                         Full name is required
                     </mat-error>
                 </mat-form-field>
-
+                <!-- Name field -->
+                <mat-form-field class="w-full">
+                    <mat-label>First name</mat-label>
+                    <input
+                        id="name"
+                        matInput
+                        formControlName="first_name">
+                    <mat-error *ngIf="signUpForm.get('first_name').hasError('required')">
+                        First name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>Last name</mat-label>
+                    <input
+                        id="name"
+                        matInput
+                        formControlName="last_name">
+                    <mat-error *ngIf="signUpForm.get('last_name').hasError('required')">
+                      Last name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date_of_birth" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                
+             
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
                     <input
                         id="email"
                         matInput
-                        [formControlName]="'email'">
+                        formControlName="email">
                     <mat-error *ngIf="signUpForm.get('email').hasError('required')">
                         Email address is required
                     </mat-error>
@@ -67,7 +93,7 @@
                         id="password"
                         matInput
                         type="password"
-                        [formControlName]="'password'"
+                        formControlName="password"
                         #passwordField>
                     <button
                         mat-icon-button
@@ -88,33 +114,10 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- Company field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
-                    <input
-                        id="company-confirm"
-                        matInput
-                        [formControlName]="'company'">
-                </mat-form-field>
-
+            
+         
                 <!-- ToS and PP -->
-                <div class="inline-flex items-end w-full mt-1.5">
-                    <mat-checkbox
-                        class="-ml-2"
-                        [color]="'primary'"
-                        [formControlName]="'agreements'">
-                        <span>I agree with</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Terms
-                        </a>
-                        <span>and</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Privacy Policy
-                        </a>
-                    </mat-checkbox>
-                </div>
+             
 
                 <!-- Submit button -->
                 <button
@@ -183,3 +186,4 @@
         </div>
     </div>
 </div>
+
