@@ -11,7 +11,38 @@
       padding: 0;
       background-color: #f7f7f7;
     }
+    input#input-file+label{
+  margin-left: 0px;
+  background-color: #e0e0e0;
+  color: rgb(41, 41, 41);
+  padding: 8px;
 
+  border: solid 2px #e9e6e6;
+
+ width: 550px;
+}
+input#input-filee+label{
+  margin-left: 0px;
+  background-color: #e0e0e0;
+  color: rgb(41, 41, 41);
+  padding: 8px;
+
+  border: solid 2px #e9e6e6;
+
+ width: 550px;
+}
+input#input-file+label :hover{
+  background-color: #ececec;;
+
+  box-shadow: #40fc50;
+ cursor: pointer  ;
+}
+input#input-filee+label :hover{
+  background-color: #ececec;;
+
+  box-shadow: #40fc50;
+ cursor: pointer  ;
+}
     .container {
       max-width: 90%;
       margin: 50px auto;
@@ -88,95 +119,125 @@
 <body>
   <div class="container">
 
-<form [formGroup]="employeeForm">
-      <h1>_____ Add Employees To Your Company _____</h1>
+<form method="post" [formGroup]="employeeForm" enctype="multipart/form-data">
+      <h1> Add Employees To Your Company</h1>
       
      
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" formControlName="firstName" required>
-     <label for="employeeID">Employee ID:</label>
-      <input type="number" id="employeeID" formControlName="matricule" required>
+      <mat-form-field class="w-full">
+        <mat-label for="firstName">First Name</mat-label>
+        <input matInput type="text" id="firstName" formControlName="firstName" required>
+      </mat-form-field>
     
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" formControlName="lastName" required>
+      <mat-form-field class="w-full">
+        <mat-label for="matricule">Matricule</mat-label>
+        <input matInput type="number" id="matricule" formControlName="matricule" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label for="lastName">Last Name</mat-label>
+        <input matInput type="text" id="lastName" formControlName="lastName" required>
+      </mat-form-field>
     
-      <label for="dateOfBirth">Date of Birth:</label>
-      <input type="date" id="dateOfBirth" formControlName="dateOfBirth" required>
+      <mat-form-field class="w-full">
+        <mat-label for="employeeID">Employee ID</mat-label>
+        <input matInput type="number" id="employeeID" formControlName="employeeID" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="dobPicker" formControlName="date_of_birth" />
+        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dobPicker></mat-datepicker>
+      </mat-form-field>
+      
+    <mat-form-field class="w-full">
+      <mat-label for="position">Position</mat-label>
+      <input matInput type="text" id="position" formControlName="position" required>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Department</mat-label>
+      <input matInput type="text" formControlName="department" required>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+    </mat-form-field>
+   
+      <mat-form-field class="w-full">
+        <mat-label>Start Date:</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="startDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+  <mat-label>Contract Type</mat-label>
+  <mat-select formControlName="employmentType" required>
+    <mat-option value="CDI">Contrat à durée indéterminée (CDI)</mat-option>
+    <mat-option value="CDD">Contrat à durée déterminée (CDD)</mat-option>
+    <mat-option value="CDD_OD">CDD à objet défini</mat-option>
+    <mat-option value="CTT">Contrat de travail temporaire</mat-option>
+    <mat-option value="CTP">Contrat de travail à temps partiel</mat-option>
+    <mat-option value="CTI">Contrat de travail intermittent</mat-option>
+    <mat-option value="CTS">Contrat de travail saisonnier</mat-option>
+  </mat-select>
+</mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Sanctions</mat-label>
+        <textarea matInput formControlName="sanctions" required></textarea>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Voluntary self-identification of disability:</mat-label>
+        <mat-select formControlName="handicap" required>
+          <mat-option value="yes">YES, I HAVE A DISABILITY</mat-option>
+          <mat-option value="no">NO, I DON'T HAVE A DISABILITY</mat-option>
+          <mat-option value="not_answer">NO, I DON'T WISH TO ANSWER</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field class="w-full">
+        <mat-label>Salary</mat-label>
+        <input matInput type="number" formControlName="salary" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currency">
+          <mat-option value="USD">USD</mat-option>
+          <mat-option value="EUR">EUR</mat-option>
+          <mat-option value="GBP">GBP</mat-option>
+          <mat-option value="CHF">CHF</mat-option>
+        </mat-select>
+      </mat-form-field>
     
-      <label for="position">Position:</label>
-      <input type="text" id="position" formControlName="position" required>
+      <mat-form-field class="w-full">
+        <mat-label>Employee Career History</mat-label>
+        <textarea matInput formControlName="employeeCarreerHistory" required></textarea>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Level</mat-label>
+        <input matInput type="number" formControlName="parentId" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Emplacement</mat-label>
+        <input matInput type="text" formControlName="emplacement" required>
+      </mat-form-field>
     
-      <label for="department">Department:</label>
-      <input type="text" id="department" formControlName="department" required>
-    
-      <label for="email">Email:</label>
-      <input type="text" id="email" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
-    
-      <label for="startDate">Start Date:</label>
-      <input type="date" id="startDate" formControlName="startDate" required>
-    
-      <label for="contractType">Contract Type:</label>
-      <select id="contractType" formControlName="contractType" required>
-        <option value="CDI">Contrat à durée indéterminée (CDI)</option>
-        <option value="CDD">Contrat à durée déterminée (CDD)</option>
-        <option value="CDD_OD">CDD à objet défini</option>
-        <option value="CTT">Contrat de travail temporaire</option>
-        <option value="CTP">Contrat de travail à temps partiel</option>
-        <option value="CTI">Contrat de travail intermittent</option>
-        <option value="CTS">Contrat de travail saisonnier</option>
-      </select>
-    
-      <label for="sanctions">Sanctions:</label>
-      <textarea id="sanctions" formControlName="sanctions" required></textarea>
-    
-      <label>Voluntary self-identification of disability:</label>
-      <label>
-        <input type="checkbox" formControlName="handicap" value="yes">
-        YES, I HAVE A DISABILITY
-      </label>
-      <label>
-        <input type="checkbox" formControlName="handicap" value="no">
-        NO, I DON'T HAVE A DISABILITY
-      </label>
-      <label>
-        <input type="checkbox" formControlName="handicap" value="not_answer">
-        NO, I DON'T WISH TO ANSWER
-      </label>
-    
-      <label for="salary">Salary:</label>
-      <input type="number" id="salary" formControlName="salary" required>
-    
-      <label for="currency">Currency:</label>
-      <select id="currency" formControlName="currency">
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-        <option value="CHF">CHF</option>
-      </select>
-    
-      <label for="employeeCarreerHistory">Employee Career History:</label>
-      <textarea id="employeeCarreerHistory" formControlName="employeeCarreerHistory" required></textarea>
-    
-      <label for="level">Level:</label>
-      <input type="number" id="level" formControlName="parentId" required>
-    
-      <label for="emplacement">Emplacement:</label>
-      <input type="text" id="emplacement" formControlName="emplacement" required>
-    
-      <label for="photo">Photo:</label>
-      <input type="file" id="photo" formControlName="photo">
-    
-      <label for="cv">CV (PDF only):</label>
-      <input type="file" id="cv" formControlName="cv" accept=".pdf">
-    
-      <label for="performanceRate">Performance Rate:</label>
-      <input type="number" id="performanceRate" formControlName="performanceRate">
-    
-      <!-- Button to view all employees -->
+      <label style="font-size: 12px; color: rgba(var(--fuse-text))" for="photo"><strong>Photo*</strong> </label>
+      <input id="input-file"  hidden (change)="onFileChange($event, 'photo')"  accept="image/*"  formControlName="photo" required  type="file"   />
+      <label  for="input-file">   <i class="fa-solid fa-upload"></i> Choose your photo(.img*) :&nbsp;{{filename}}</label>
+      
+      
+      
+      
+      <label style="font-size: 12px; color: rgba(var(--fuse-text))"  for="cv"> <strong>(PDF only)*</strong> </label>
+      <input id="input-filee"  hidden (change)="onFileChangee($event, 'cv')"  accept="application/*"  formControlName="cv" required  type="file"   />
+      <label  for="input-filee">   <i class="fa-solid fa-upload"></i> Choose your cv(.pdf*) :&nbsp;{{filenamee}}</label>
+      
+     
+  <mat-form-field class="w-full">
+    <mat-label>Performance Rate</mat-label>
+    <input matInput type="number" formControlName="performanceRate">
+  </mat-form-field>
       <div class="button-container">
-        <button type="submit" (click)="submitForm()">Add Employee</button>
-        <button type="button" class="blue">View All Employees</button>
-        <button type="button" class="red">Remove Employee</button>
+        <button mat-raised-button color="primary" type="submit" (click)="submitForm()">Add Employee</button>
       </div>
     </form>
     

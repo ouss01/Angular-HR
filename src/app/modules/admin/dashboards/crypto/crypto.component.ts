@@ -1,8 +1,10 @@
-import { CurrencyPipe, DecimalPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, DecimalPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -14,14 +16,15 @@ import { EmployeeService } from 'app/services/employee.service';
 import { DateTime } from 'luxon';
 import { ApexOptions, ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
-
+import swal from 'sweetalert';
 @Component({
     selector       : 'crypto',
     templateUrl    : './crypto.component.html',
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [MatSidenavModule,ReactiveFormsModule , NgFor, MatIconModule, NgClass, NgApexchartsModule, MatFormFieldModule, MatSelectModule, MatOptionModule, NgIf, FormsModule, MatInputModule, MatButtonModule, UpperCasePipe, DecimalPipe, CurrencyPipe],
+    providers:[DatePipe],
+    imports        : [MatSidenavModule,ReactiveFormsModule,MatCheckboxModule,MatDatepickerModule,MatNativeDateModule, NgFor, MatIconModule, NgClass, NgApexchartsModule, MatFormFieldModule, MatSelectModule, MatOptionModule, NgIf, FormsModule, MatInputModule, MatButtonModule, UpperCasePipe, DecimalPipe, CurrencyPipe],
 })
 export class CryptoComponent implements OnInit, OnDestroy
 {
@@ -34,6 +37,11 @@ export class CryptoComponent implements OnInit, OnDestroy
     watchlistChartOptions: ApexOptions = {};
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     employeeForm:any=FormGroup
+    selectedFiles: { [key: string]: File } = {};    
+    filename='None'
+ photo:any
+    cv: any;
+    filenamee='None';
     /**
      * Constructor
      */
@@ -41,6 +49,7 @@ export class CryptoComponent implements OnInit, OnDestroy
         private _cryptoService: CryptoService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private datePipe:DatePipe
     )
     {
     }
@@ -52,32 +61,31 @@ export class CryptoComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-
-
+    ngOnInit(): void {
+  
         this.employeeForm = this.fb.group({
-           
             firstName: ['', Validators.required],
-            matricule: ['', Validators.required],
+            matricule: [null, Validators.required],
             lastName: ['', Validators.required],
-            dateOfBirth: ['', Validators.required],
+            employeeID: [null, Validators.required],
+            date_of_birth: ['', Validators.required],
             position: ['', Validators.required],
             department: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")]],
             startDate: ['', Validators.required],
-            contractType: ['', Validators.required],
-            sanctions: [''],
-           handicap: [''],
-            salary: ['', Validators.required],
-            currency: ['', Validators.required],
-            employeeCarreerHistory: [''],
-            parentId: [''],
-            emplacement: [''],
-            photo: [''],
-            cv: [''],
-            performanceRate: ['']
-          });
+            employmentType: ['', Validators.required],
+            sanctions: ['', Validators.required],
+            handicap: [''],
+            salary: [null, Validators.required],
+            currency: ['USD'],
+            employeeCarreerHistory: ['', Validators.required],
+            parentId: [null, Validators.required],
+            emplacement: ['', Validators.required],
+            photo: [null],
+            cv: [null],
+            performanceRate: [null]
+        })
+    
         
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
@@ -116,33 +124,104 @@ export class CryptoComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
+    selectedImage: any
+    onCheckboxChange(event: MatCheckboxChange) {
+        if (event.checked) {
+          this.employeeForm.get('handicap').setValue(event.source.value);
+        } else {
+      
+        }
+      }
+      
+      
+      
+    onFileSelected(event: Event): void {
+      const inputElement = event.target as HTMLInputElement;
+      if (inputElement.files && inputElement.files[0]) {
+        const file = inputElement.files[0];
+        this.previewImage(file);
+        this.employeeForm.patchValue({
+          image: file
+        });
+      }
+    }
+    onFileSelec(event:any) {
+        this.photo=event.target.files[0]
+        this.filename=event.target.files[0].name
+   console .log(this.filename)
+        
+     
+    }
+  
+    private previewImage(file: File): void {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedImage = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-    submitForm(): void {
-        if (this.employeeForm.valid) {
-          const formData = new FormData();
-          Object.keys(this.employeeForm.value).forEach(key => {
-            formData.append(key, this.employeeForm.value[key]);
-          });
-    
-          this.employeeservice.addEmployee(formData).subscribe(
-            response => {
-              console.log('Employee added successfully:', response);
-              // Reset form after successful submission
-              this.employeeForm.reset();
-            },
-            error => {
-              console.error('Error adding employee:', error);
-              // Handle error as needed
-            }
-          );
+    onFileChange(event: any, field: string): void {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedFiles[field] = file;
+            
+            this.photo=event.target.files[0]
+            this.filename=event.target.files[0].name}
+        
         }
-      }
-    // -----------------------------------------------------------------------------------------------------
+        onFileChangee(event: any, field: string): void {
+            const file = event.target.files[0];
+            if (file) {
+                this.selectedFiles[field] = file;
+                  this.cv=event.target.files[0]
+                    this.filenamee=event.target.files[0].name}
+           console .log(this.filename)
+            }
+            submitForm(): void {
+                if (this.employeeForm.valid) {
+                    const formattedDateOfBirth = this.datePipe.transform(this.employeeForm.get('date_of_birth').value, 'yyyy-MM-dd');
+                    const formattedStartDate = this.datePipe.transform(this.employeeForm.get('startDate').value, 'yyyy-MM-dd');
+            
+                    const formData = new FormData();
+                    const form = this.employeeForm.value;
+            
+                    Object.keys(form).forEach(key => {
+                        const formValue = form[key];
+                        if (key === 'date_of_birth') {
+                            formData.append(key, formattedDateOfBirth);
+                        } else if (key === 'startDate') {
+                            formData.append(key, formattedStartDate);
+                        } else if (this.selectedFiles[key]) {
+                            formData.append(key, this.selectedFiles[key], this.selectedFiles[key].name);
+                        } else {
+                            formData.append(key, formValue);
+                        }
+                    });
+            
+                    this.employeeservice.addEmployee(formData).subscribe(
+                        response => {
+                            console.log('Employee added successfully:', response);
+                            swal("Employee added Successfully!");
+                            this.employeeForm.reset(); 
+                            this.filename='';
+                            this.filenamee='';
+                        },
+                        error => {
+                            console.error('Error adding employee:', error);
+                        }
+                    );
+                } else {
+                    // Handle form validation errors
+                }
+            }
+            
+    
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
 

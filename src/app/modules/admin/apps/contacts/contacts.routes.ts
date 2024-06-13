@@ -2,8 +2,6 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { ContactsComponent } from 'app/modules/admin/apps/contacts/contacts.component';
 import { ContactsService } from 'app/modules/admin/apps/contacts/contacts.service';
-import { ContactsDetailsComponent } from 'app/modules/admin/apps/contacts/details/details.component';
-import { ContactsListComponent } from 'app/modules/admin/apps/contacts/list/list.component';
 import { catchError, throwError } from 'rxjs';
 
 /**
@@ -46,7 +44,6 @@ const contactResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapsh
  * @param nextState
  */
 const canDeactivateContactsDetails = (
-    component: ContactsDetailsComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot) =>
@@ -75,7 +72,6 @@ const canDeactivateContactsDetails = (
     }
 
     // Otherwise, close the drawer first, and then navigate
-    return component.closeDrawer().then(() => true);
 };
 
 export default [
@@ -86,25 +82,7 @@ export default [
             tags: () => inject(ContactsService).getTags(),
         },
         children : [
-            {
-                path     : '',
-                component: ContactsListComponent,
-                resolve  : {
-                    contacts : () => inject(ContactsService).getContacts(),
-                    countries: () => inject(ContactsService).getCountries(),
-                },
-                children : [
-                    {
-                        path         : ':id',
-                        component    : ContactsDetailsComponent,
-                        resolve      : {
-                            contact  : contactResolver,
-                            countries: () => inject(ContactsService).getCountries(),
-                        },
-                        canDeactivate: [canDeactivateContactsDetails],
-                    },
-                ],
-            },
+            
         ],
     },
 ] as Routes;
