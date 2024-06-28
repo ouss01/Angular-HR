@@ -1,272 +1,500 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management Dashboard</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-        }
-        
-        .header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 0 0 10px 10px;
-        }
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
 
-        .title {
-            font-size: 28px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-symbol {
-            font-size: 20px;
-            margin-right: 10px;
-        }
-
-        .search-input {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            margin-right: 10px;
-            width: 200px;
-            background-color: white;
-            color: black;
-            font-size: 18px;
-        }
-
-        .filter-container select {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-
-        .filter-container button {
-            padding: 12px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .container {
-            max-width: 90%;
-            margin: 50px auto;
-            background-color: #fff;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow-x: auto; /* Add horizontal scrollbar */
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            min-width: 1500px; /* Set a minimum width for the table */
-        }
-
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-            min-width: 100px; /* Set a minimum width for table cells */
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .delete-btn, .modify-btn, .status-select {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-
-        .delete-btn {
-            background-color: #ff0000;
-        }
-
-        .add-btn {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .heading {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .action-select {
-            padding: 12px;
-            border: 1px solid #007bff;
-            border-radius: 8px;
-            background-color: #007bff;
-            color: white;
-            font-size: 18px;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .status-select {
-            width: 100%;
-            background-color: transparent;
-            color: #007bff;
-            border: 1px solid #007bff;
-            border-radius: 8px;
-            font-size: 16px;
-            padding: 8px;
-            cursor: pointer;
-        }
-        
-        .status-select.approved {
-            color: #28a745;
-            border-color: #28a745;
-        }
-
-        .status-select.pending {
-            color: #ffc107;
-            border-color: #ffc107;
-        }
-
-        .status-select.declined {
-            color: #dc3545;
-            border-color: #dc3545;
-        }
-
-        .action-icons i {
-            font-size: 20px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1 class="title">All Employees</h1>
-        <div class="search-container">
-            <span class="search-symbol">&#x1F50D;</span>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+    <!-- Header -->
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        <!-- Loader -->
+        <div
+            class="absolute inset-x-0 bottom-0"
+            *ngIf="isLoading">
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
-        <div class="filter-container">
-            <select id="statusFilter" class="action-select">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>
-            <button onclick="filterEmployees()">Apply Filter</button>
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">Inventory</div>
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <!-- Search -->
+            <mat-form-field
+                class="fuse-mat-dense fuse-mat-rounded min-w-64"
+                [subscriptSizing]="'dynamic'">
+                <mat-icon
+                    class="icon-size-5"
+                    matPrefix
+                    [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                <input
+                    matInput
+                    [formControl]="searchInputControl"
+                    [autocomplete]="'off'"
+                    [placeholder]="'Search products'">
+            </mat-form-field>
+            <!-- Add product button -->
+            <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="createProduct()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Add</span>
+            </button>
         </div>
     </div>
-    <div class="container">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>Employee ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Date of Birth</th>
-                    <th>Position</th>
-                    <th>Department</th>
-                    <th>Employment Type</th>
-                    <th>Email</th>
-                    <th>Start Date</th>
-                    <th>Departure Date</th>
-                    <th>Sanctions</th>
-                    <th>Handicap</th>
-                    <th>Salary</th>
-                    <th>Retirement Date</th>
-                    <th>Career History</th>
-                    <th>Onboarding</th>
-                    <th>Competences</th>
-                    <th>Matricule</th>
-                    <th>Level</th>
-                    <th>Emplacement</th>
-                    <th>Photo</th>
-                    <th>Performance Rate</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let emp of employees">
-                    <td><input type="checkbox" class="form-check-input"></td>
-                    <td>{{ emp.employeeId }}</td>
-                    <td>{{ emp.firstName }}</td>
-                    <td>{{ emp.lastName }}</td>
-                    <td>{{ emp.dateOfBirth }}</td>
-                    <td>{{ emp.position }}</td>
-                    <td>{{ emp.department }}</td>
-                    <td>{{ emp.employmentType }}</td>
-                    <td>{{ emp.email }}</td>
-                    <td>{{ emp.startDate }}</td>
-                    <td>{{ emp.departureDate }}</td>
-                    <td>{{ emp.sanctions }}</td>
-                    <td>{{ emp.handicap }}</td>
-                    <td>{{ emp.salary }}</td>
-                    <td>{{ emp.retirementDate }}</td>
-                    <td>{{ emp.careerHistory }}</td>
-                    <td>{{ emp.onboarding }}</td>
-                    <td>{{ emp.competences }}</td>
-                    <td>{{ emp.matricule }}</td>
-                    <td>{{ emp.level }}</td>
-                    <td>{{ emp.emplacement }}</td>
-                    <td><img src="{{ emp.photo }}" alt="Employee Photo" style="width: 50px; height: auto;" /></td>
-                    <td>{{ emp.performanceRate }}</td>
-                    <td>
-                        <div class="action-icons">
-                            <i class="fas fa-edit text-primary"></i>
-                            <i class="fas fa-trash-alt text-danger"></i>
+
+    <!-- Main -->
+    <div class="flex flex-auto overflow-hidden">
+
+        <!-- Products list -->
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+            <ng-container *ngIf="(products$ | async) as products">
+                <ng-container *ngIf="products.length > 0; else noProducts">
+                    <div class="grid">
+                        <!-- Header -->
+                        <div
+                            class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            matSort
+                            matSortDisableClear>
+                            <div></div>
+                            <div
+                                class="hidden md:block"
+                                [mat-sort-header]="'sku'">
+                                SKU
+                            </div>
+                            <div [mat-sort-header]="'name'">Name</div>
+                            <div
+                                class="hidden sm:block"
+                                [mat-sort-header]="'price'">
+                                Price
+                            </div>
+                            <div
+                                class="hidden lg:block"
+                                [mat-sort-header]="'stock'">
+                                Stock
+                            </div>
+                            <div
+                                class="hidden lg:block"
+                                [mat-sort-header]="'active'">
+                                Active
+                            </div>
+                            <div class="hidden sm:block">Details</div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <!-- Rows -->
+                        <ng-container *ngIf="(products$ | async) as products">
+                            <ng-container *ngFor="let product of products; trackBy: trackByFn">
+                                <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+
+                                    <!-- Image -->
+                                    <div class="flex items-center">
+                                        <div class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border">
+                                            <img
+                                                class="w-8"
+                                                *ngIf="product.thumbnail"
+                                                [alt]="'Product thumbnail image'"
+                                                [src]="product.thumbnail">
+                                            <div
+                                                class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase"
+                                                *ngIf="!product.thumbnail">
+                                                NO THUMB
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- SKU -->
+                                    <div class="hidden md:block truncate">
+                                        {{product.sku}}
+                                    </div>
+
+                                    <!-- Name -->
+                                    <div class="truncate">
+                                        {{product.name}}
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="hidden sm:block">
+                                        {{product.price | currency:'USD':'symbol':'1.2-2'}}
+                                    </div>
+
+                                    <!-- Stock -->
+                                    <div class="hidden lg:flex items-center">
+                                        <div class="min-w-4">{{product.stock}}</div>
+                                        <!-- Low stock -->
+                                        <div
+                                            class="flex items-end ml-2 w-1 h-4 bg-red-200 rounded overflow-hidden"
+                                            *ngIf="product.stock < 20">
+                                            <div class="flex w-full h-1/3 bg-red-600"></div>
+                                        </div>
+                                        <!-- Medium stock -->
+                                        <div
+                                            class="flex items-end ml-2 w-1 h-4 bg-orange-200 rounded overflow-hidden"
+                                            *ngIf="product.stock >= 20 && product.stock < 30">
+                                            <div class="flex w-full h-2/4 bg-orange-400"></div>
+                                        </div>
+                                        <!-- High stock -->
+                                        <div
+                                            class="flex items-end ml-2 w-1 h-4 bg-green-100 rounded overflow-hidden"
+                                            *ngIf="product.stock >= 30">
+                                            <div class="flex w-full h-full bg-green-400"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Active -->
+                                    <div class="hidden lg:block">
+                                        <ng-container *ngIf="product.active">
+                                            <mat-icon
+                                                class="text-green-400 icon-size-5"
+                                                [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                        </ng-container>
+                                        <ng-container *ngIf="!product.active">
+                                            <mat-icon
+                                                class="text-gray-400 icon-size-5"
+                                                [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+                                        </ng-container>
+                                    </div>
+
+                                    <!-- Details button -->
+                                    <div>
+                                        <button
+                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                            mat-stroked-button
+                                            (click)="toggleDetails(product.id)">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="selectedProduct?.id === product.id ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-down'"></mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="grid">
+                                    <ng-container *ngIf="selectedProduct?.id === product.id">
+                                        <ng-container *ngTemplateOutlet="rowDetailsTemplate; context: {$implicit: product}"></ng-container>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                    <mat-paginator
+                        class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                        [ngClass]="{'pointer-events-none': isLoading}"
+                        [length]="pagination.length"
+                        [pageIndex]="pagination.page"
+                        [pageSize]="pagination.size"
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        [showFirstLastButtons]="true"></mat-paginator>
+
+                </ng-container>
+            </ng-container>
+
+            <ng-template
+                #rowDetailsTemplate
+                let-product>
+                <div class="shadow-lg overflow-hidden">
+                    <div class="flex border-b">
+                        <!-- Selected product form -->
+                        <form
+                            class="flex flex-col w-full"
+                            [formGroup]="selectedProductForm">
+
+                            <div class="flex flex-col sm:flex-row p-8">
+
+                                <!-- Product images and status -->
+                                <div class="flex flex-col items-center sm:items-start mb-8 sm:mb-0">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-32 h-44 border rounded overflow-hidden">
+                                            <ng-container *ngIf="selectedProductForm.get('images').value.length; else noImage">
+                                                <img
+                                                    class="w-full h-full object-cover"
+                                                    [src]="selectedProductForm.get('images').value[selectedProductForm.get('currentImageIndex').value]">
+                                            </ng-container>
+                                            <ng-template #noImage>
+                                                <span class="flex items-center min-h-20 text-lg font-semibold">NO IMAGE</span>
+                                            </ng-template>
+                                        </div>
+                                        <div
+                                            class="flex items-center mt-2 whitespace-nowrap"
+                                            *ngIf="selectedProductForm.get('images').value.length">
+                                            <button
+                                                mat-icon-button
+                                                (click)="cycleImages(false)">
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    [svgIcon]="'heroicons_mini:arrow-long-left'"></mat-icon>
+                                            </button>
+                                            <span class="font-sm mx-2">
+                                                {{selectedProductForm.get('currentImageIndex').value + 1}} of {{selectedProductForm.get('images').value.length}}
+                                            </span>
+                                            <button
+                                                mat-icon-button
+                                                (click)="cycleImages(true)">
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    [svgIcon]="'heroicons_mini:arrow-long-right'"></mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col mt-8">
+                                        <span class="font-semibold mb-2">Product status</span>
+                                        <mat-slide-toggle
+                                            [formControlName]="'active'"
+                                            [color]="'primary'">
+                                            {{selectedProductForm.get('active').value === true ? 'Active' : 'Disabled'}}
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-auto flex-wrap">
+                                    <!-- Name, SKU & etc. -->
+                                    <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+
+                                        <!-- Name -->
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Name</mat-label>
+                                            <input
+                                                matInput
+                                                [formControlName]="'name'">
+                                        </mat-form-field>
+
+                                        <!-- SKU and Barcode -->
+                                        <div class="flex">
+                                            <mat-form-field class="w-1/3 pr-2">
+                                                <mat-label>SKU</mat-label>
+                                                <input
+                                                    matInput
+                                                    [formControlName]="'sku'">
+                                            </mat-form-field>
+                                            <mat-form-field class="w-2/3 pl-2">
+                                                <mat-label>Barcode</mat-label>
+                                                <input
+                                                    matInput
+                                                    [formControlName]="'barcode'">
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!-- Category, Brand & Vendor -->
+                                        <div class="flex">
+                                            <mat-form-field class="w-1/3 pr-2">
+                                                <mat-label>Category</mat-label>
+                                                <mat-select [formControlName]="'category'">
+                                                    <ng-container *ngFor="let category of categories">
+                                                        <mat-option [value]="category.id">
+                                                            {{category.name}}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field class="w-1/3 px-2">
+                                                <mat-label>Brand</mat-label>
+                                                <mat-select [formControlName]="'brand'">
+                                                    <ng-container *ngFor="let brand of brands">
+                                                        <mat-option [value]="brand.id">
+                                                            {{brand.name}}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field class="w-1/3 pl-2">
+                                                <mat-label>Vendor</mat-label>
+                                                <mat-select [formControlName]="'vendor'">
+                                                    <ng-container *ngFor="let vendor of vendors">
+                                                        <mat-option [value]="vendor.id">
+                                                            {{vendor.name}}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!-- Stock and Reserved -->
+                                        <div class="flex">
+                                            <mat-form-field class="w-1/3 pr-2">
+                                                <mat-label>Stock</mat-label>
+                                                <input
+                                                    type="number"
+                                                    matInput
+                                                    [formControlName]="'stock'">
+                                            </mat-form-field>
+                                            <mat-form-field class="w-1/3 pl-2">
+                                                <mat-label>Reserved</mat-label>
+                                                <input
+                                                    type="number"
+                                                    matInput
+                                                    [formControlName]="'reserved'">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cost, Base price, Tax & Price -->
+                                    <div class="flex flex-col w-full lg:w-1/4 sm:pl-8">
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Cost</mat-label>
+                                            <span matPrefix>$</span>
+                                            <input
+                                                matInput
+                                                [formControlName]="'cost'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Base Price</mat-label>
+                                            <span matPrefix>$</span>
+                                            <input
+                                                matInput
+                                                [formControlName]="'basePrice'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Tax</mat-label>
+                                            <span matSuffix>%</span>
+                                            <input
+                                                type="number"
+                                                matInput
+                                                [formControlName]="'taxPercent'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Price</mat-label>
+                                            <span matSuffix>$</span>
+                                            <input
+                                                matInput
+                                                [formControlName]="'price'">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- Weight & Tags -->
+                                    <div class="flex flex-col w-full lg:w-1/4 sm:pl-8">
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Weight</mat-label>
+                                            <span matSuffix>lbs.</span>
+                                            <input
+                                                matInput
+                                                [formControlName]="'weight'">
+                                        </mat-form-field>
+
+                                        <!-- Tags -->
+                                        <span class="mb-px font-medium leading-tight">Tags</span>
+                                        <div class="mt-1.5 rounded-md border border-gray-300 dark:border-gray-500 shadow-sm overflow-hidden">
+                                            <!-- Header -->
+                                            <div class="flex items-center -my-px py-2 px-3">
+                                                <div class="flex items-center flex-auto min-w-0">
+                                                    <mat-icon
+                                                        class="icon-size-5"
+                                                        [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                                                    <input
+                                                        class="min-w-0 ml-2 py-1 border-0"
+                                                        type="text"
+                                                        placeholder="Enter tag name"
+                                                        (input)="filterTags($event)"
+                                                        (keydown)="filterTagsInputKeyDown($event)"
+                                                        [maxLength]="50"
+                                                        #newTagInput>
+                                                </div>
+                                                <button
+                                                    class="ml-3 w-8 h-8 min-h-8"
+                                                    mat-icon-button
+                                                    (click)="toggleTagsEditMode()">
+                                                    <mat-icon
+                                                        *ngIf="!tagsEditMode"
+                                                        class="icon-size-5"
+                                                        [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+                                                    <mat-icon
+                                                        *ngIf="tagsEditMode"
+                                                        class="icon-size-5"
+                                                        [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                </button>
+                                            </div>
+                                            <!-- Available tags -->
+                                            <div class="h-44 leading-none overflow-y-auto border-t border-gray-300 dark:border-gray-500">
+                                                <!-- Tags -->
+                                                <ng-container *ngIf="!tagsEditMode">
+                                                    <ng-container *ngFor="let tag of filteredTags; trackBy: trackByFn">
+                                                        <mat-checkbox
+                                                            class="flex items-center h-10 min-h-10 pl-1 pr-4"
+                                                            [color]="'primary'"
+                                                            [checked]="selectedProduct.tags.includes(tag.id)"
+                                                            (change)="toggleProductTag(tag, $event)">
+                                                            {{tag.title}}
+                                                        </mat-checkbox>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <!-- Tags editing -->
+                                                <ng-container *ngIf="tagsEditMode">
+                                                    <div class="p-4 space-y-2">
+                                                        <ng-container *ngFor="let tag of filteredTags; trackBy: trackByFn">
+                                                            <mat-form-field
+                                                                class="fuse-mat-dense w-full"
+                                                                [subscriptSizing]="'dynamic'">
+                                                                <input
+                                                                    matInput
+                                                                    [value]="tag.title"
+                                                                    (input)="updateTagTitle(tag, $event)">
+                                                                <button
+                                                                    mat-icon-button
+                                                                    (click)="deleteTag(tag)"
+                                                                    matSuffix>
+                                                                    <mat-icon
+                                                                        class="icon-size-5"
+                                                                        [svgIcon]="'heroicons_solid:trash'"></mat-icon>
+                                                                </button>
+                                                            </mat-form-field>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
+                                                <div
+                                                    class="flex items-center h-10 min-h-10 -ml-0.5 pl-4 pr-3 leading-none cursor-pointer border-t hover:bg-gray-50 dark:hover:bg-hover"
+                                                    *ngIf="shouldShowCreateTagButton(newTagInput.value)"
+                                                    (click)="createTag(newTagInput.value); newTagInput.value = ''"
+                                                    matRipple>
+                                                    <mat-icon
+                                                        class="mr-2 icon-size-5"
+                                                        [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
+                                                    <div class="break-all">Create "<b>{{newTagInput.value}}</b>"</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex items-center justify-between w-full border-t px-8 py-4">
+                                <button
+                                    class="-ml-4"
+                                    mat-button
+                                    [color]="'warn'"
+                                    (click)="deleteSelectedProduct()">
+                                    Delete
+                                </button>
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex items-center mr-4"
+                                        *ngIf="flashMessage">
+                                        <ng-container *ngIf="flashMessage === 'success'">
+                                            <mat-icon
+                                                class="text-green-500"
+                                                [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                                            <span class="ml-2">Product updated</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="flashMessage === 'error'">
+                                            <mat-icon
+                                                class="text-red-500"
+                                                [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                                            <span class="ml-2">An error occurred, try again!</span>
+                                        </ng-container>
+                                    </div>
+                                    <button
+                                        mat-flat-button
+                                        [color]="'primary'"
+                                        (click)="updateSelectedProduct()">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #noProducts>
+                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+            </ng-template>
+
+        </div>
+
     </div>
-    <div class="button-container">
-        <button class="add-btn">Add Employee</button>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+</div>

@@ -24,8 +24,8 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link : '/dashboards/analytics',
             },
             {
-                id   : 'dashboards.finance',
-                title: 'Finance',
+                id   : 'dashboards.Onboarding',
+                title: 'Onboarding',
                 type : 'basic',
                 icon : 'heroicons_outline:banknotes',
                 link : '/dashboards/finance',

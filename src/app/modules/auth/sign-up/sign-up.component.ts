@@ -3,12 +3,13 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
@@ -21,7 +22,7 @@ import { AuthService } from 'app/core/auth/auth.service';
     animations   : fuseAnimations,
     standalone   : true,
     providers: [DatePipe],
-    imports      : [RouterLink, NgIf, FuseAlertComponent,MatDatepickerModule,MatNativeDateModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule],
+    imports      : [RouterLink,    MatSelectModule,MatOptionModule,NgIf, FuseAlertComponent,MatDatepickerModule,MatNativeDateModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule],
 })
 export class AuthSignUpComponent implements OnInit
 {
@@ -61,6 +62,7 @@ export class AuthSignUpComponent implements OnInit
               password: ['', Validators.required],
               first_name: ['', Validators.required],
               last_name: ['', Validators.required], 
+              roles:['',Validators.required],
               date_of_birth: [today, Validators.required]
               
             });

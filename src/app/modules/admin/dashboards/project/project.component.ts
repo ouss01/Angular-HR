@@ -18,6 +18,9 @@ import * as d3 from 'd3';
 import { Routes, RouterModule } from '@angular/router';
 import { PosteService } from 'app/services/poste.service';
 import { EquipeService } from 'app/services/equipe.service';
+import { MatSelectModule } from '@angular/material/select';
+import { CurrentUserService } from 'app/services/current-user.service';
+import { AuthService } from 'app/core/auth/auth.service';
 
 
 @Component({
@@ -26,7 +29,7 @@ import { EquipeService } from 'app/services/equipe.service';
     encapsulation  : ViewEncapsulation.None,
     // changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [RouterModule,TranslocoModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, D3OrgChartComponent,MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
+    imports        : [RouterModule,TranslocoModule,   MatSelectModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, D3OrgChartComponent,MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
 })
 export class ProjectComponent implements OnInit, OnDestroy
 {
@@ -43,12 +46,15 @@ export class ProjectComponent implements OnInit, OnDestroy
 
     employee:any
     equipe: any[] = [];
+    currentuser: any;
 
 
     /**
      * Constructor
      */
     constructor(
+        
+        private curent_user:AuthService,
         private equipeService:EquipeService,
         private _projectService: ProjectService,
         private _router: Router,
@@ -70,7 +76,7 @@ export class ProjectComponent implements OnInit, OnDestroy
     postes: any[] = [];
     ngOnInit(): void
     {
-
+        this.getcurrentuser()
         this.loadPostes();
         this.getEquipe();
         
@@ -125,7 +131,13 @@ export class ProjectComponent implements OnInit, OnDestroy
         })
     }
     
-
+    getcurrentuser() {
+        this.currentuser=this.curent_user.decodeToken()
+          
+            console.log( this.currentuser)
+         
+        
+    }       
 
 
     loadPostes(): void {

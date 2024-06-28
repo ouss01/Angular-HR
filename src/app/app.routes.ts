@@ -100,7 +100,7 @@ export const appRoutes: Route[] = [
             // Apps
             {path: 'apps', children: [
                 {path: 'chat', loadChildren: () => import('app/modules/admin/apps/chat/chat.routes')},
-                {path: 'contacts', loadChildren: () => import('app/modules/admin/apps/contacts/contacts.routes')},
+                {path: 'contacts', loadChildren: () => import('app/modules/admin/apps/ecommerce/ecommerce.routes')},
                 {path: 'file-manager', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.routes')},
                 {path: 'help-center', loadChildren: () => import('app/modules/admin/apps/help-center/help-center.routes')},
                 {path: 'mailbox', loadChildren: () => import('app/modules/admin/apps/mailbox/mailbox.routes')},

@@ -31,8 +31,8 @@
                             "crypto-js/enc-utf8",
                             "crypto-js/hmac-sha256",
                             "crypto-js/enc-base64",
-                            "flat",
-                            "quill"
+                            "flat"
+                            
                         ],
                         "assets": [
                             "src/favicon-16x16.png",
@@ -119,10 +119,7 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "node_modules/ngx-org-chart/_theming.scss",
-                            "./node_modules/@fuse/scss/fuse.scss",
-                            "src/app/d3-org-chart/d3-org-chart.component.css"
+                           
                         ],
                         "scripts": []
                     }

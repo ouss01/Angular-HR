@@ -37,6 +37,7 @@
                     <input
                         id="name"
                         matInput
+                        placeholder="Full name"
                         formControlName="username">
                     <mat-error *ngIf="signUpForm.get('username').hasError('required')">
                         Full name is required
@@ -48,6 +49,7 @@
                     <input
                         id="name"
                         matInput
+                        placeholder="First name"
                         formControlName="first_name">
                     <mat-error *ngIf="signUpForm.get('first_name').hasError('required')">
                         First name is required
@@ -58,14 +60,16 @@
                     <input
                         id="name"
                         matInput
+                        placeholder="Last name"
                         formControlName="last_name">
                     <mat-error *ngIf="signUpForm.get('last_name').hasError('required')">
                       Last name is required
                     </mat-error>
                 </mat-form-field>
+               
                 <mat-form-field class="w-full">
                     <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="date_of_birth" />
+                    <input   matInput [matDatepicker]="picker" formControlName="date_of_birth" />
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -76,8 +80,10 @@
                     <mat-label>Email address</mat-label>
                     <input
                         id="email"
+                     
                         matInput
-                        formControlName="email">
+                        formControlName="email"
+                        placeholder="user@email.com">
                     <mat-error *ngIf="signUpForm.get('email').hasError('required')">
                         Email address is required
                     </mat-error>
@@ -85,13 +91,25 @@
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
-
+                <mat-form-field class="w-full">
+                    <mat-select
+                        formControlName="roles"
+                        placeholder="Select role"
+                        required>
+                        <mat-option value="is_hr_manager">HR Manager</mat-option>
+                        <mat-option value="is_manager">Manager</mat-option>
+                        <mat-option value="is_employee">Employee</mat-option>
+                    </mat-select>
+                  
+                  
+                </mat-form-field>
                 <!-- Password field -->
                 <mat-form-field class="w-full">
                     <mat-label>Password</mat-label>
                     <input
                         id="password"
                         matInput
+                        placeholder="password"
                         type="password"
                         formControlName="password"
                         #passwordField>
