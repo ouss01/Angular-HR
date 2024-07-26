@@ -113,6 +113,6 @@ item: any;
         this.photo=event.target.files[0]
         this.filename=event.target.files[0].name}
     
-    }
-    
+  }
+
 }

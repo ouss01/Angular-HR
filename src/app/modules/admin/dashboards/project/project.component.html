@@ -11,7 +11,7 @@
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
-                            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{t('welcome-back')}} {{currentuser.roles}} , {{currentuser.username}}</div>
+                            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{t('welcome-back')}} {{currentuser.username}} , {{currentuser.roles}} </div>
                         </ng-container>
                         <div class="flex items-center">
                             <mat-icon
@@ -24,19 +24,25 @@
                 <!-- Actions -->
                 <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
                     <button
-                        class="bg-accent"
+                        class="bg-primary"
                         mat-flat-button
-                        [color]="'accent'">
-                       
+                        [color]="'primary'"
+                        routerLink="/dashboards/crypto">
                         <span class="ml-2">Ajouté Des Employées</span>
                     </button>
                     <button
+                    class="bg-primary"
+                    mat-flat-button
+                    [color]="'primary'"
+                    routerLink="/dashboards/analytics">
+                    <span class="ml-2">Tous Les Employées</span>
+                </button>
+                    <button
+                        class="bg-primary"
                         mat-flat-button
-                        [color]="'primary'">
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog-8-tooth'"></mat-icon>
-                        <span class="ml-2">Settings</span>
+                        [color]="'primary'"
+                        routerLink="/dashboards/finance">
+                        <span class="ml-2">Onboarding</span>
                     </button>
                 </div>
             </div>

@@ -96,7 +96,7 @@ export class ContactsComponent implements OnInit, AfterViewInit, OnDestroy
             name             : ['', [Validators.required]],
             description      : [''],
             tags             : [[]],
-            sku              : [''],
+            Matricule        : [''],
             barcode          : [''],
             brand            : [''],
             vendor           : [''],
