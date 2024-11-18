@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Employees To Your Company</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+    input#input-file+label{
+  margin-left: 0px;
+  background-color: #e0e0e0;
+  color: rgb(41, 41, 41);
+  padding: 8px;
+
+  border: solid 2px #e9e6e6;
+
+ width: 550px;
+}
+input#input-filee+label{
+  margin-left: 0px;
+  background-color: #e0e0e0;
+  color: rgb(41, 41, 41);
+  padding: 8px;
+
+  border: solid 2px #e9e6e6;
+
+ width: 550px;
+}
+input#input-file+label :hover{
+  background-color: #ececec;;
+
+  box-shadow: #40fc50;
+ cursor: pointer  ;
+}
+input#input-filee+label :hover{
+  background-color: #ececec;;
+
+  box-shadow: #40fc50;
+ cursor: pointer  ;
+}
+    .container {
+      max-width: 90%;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      margin-bottom: 40px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+      font-size: 18px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 18px;
+    }
+
+    textarea {
+      height: 200px;
+    }
+
+    .button-container {
+      text-align: right;
+      margin-top: 20px; /* Add margin-top to create space between buttons and form */
+    }
+
+    button {
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 20px 40px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    button[type="submit"] {
+      background-color: #28a745;
+    }
+
+    button.blue {
+      background-color: #007bff; /* Change button color to blue */
+    }
+
+    button.red {
+      background-color: #ff0000; /* Change button color to red */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+<form method="post" [formGroup]="employeeForm" enctype="multipart/form-data">
+      <h1> Add Employees To Your Company</h1>
+      
+     
+      <mat-form-field class="w-full">
+        <mat-label for="firstName">First Name</mat-label>
+        <input matInput type="text" id="firstName" formControlName="firstName" required>
+      </mat-form-field>
+    
+      <mat-form-field class="w-full">
+        <mat-label for="matricule">Matricule</mat-label>
+        <input matInput type="number" id="matricule" formControlName="matricule" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label for="lastName">Last Name</mat-label>
+        <input matInput type="text" id="lastName" formControlName="lastName" required>
+      </mat-form-field>
+    
+      <mat-form-field class="w-full">
+        <mat-label for="employeeID">Employee ID</mat-label>
+        <input matInput type="number" id="employeeID" formControlName="employeeID" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="dobPicker" formControlName="date_of_birth" />
+        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dobPicker></mat-datepicker>
+      </mat-form-field>
+      
+    <mat-form-field class="w-full">
+      <mat-label for="position">Position</mat-label>
+      <input matInput type="text" id="position" formControlName="position" required>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Department</mat-label>
+      <input matInput type="text" formControlName="department" required>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+    </mat-form-field>
+   
+      <mat-form-field class="w-full">
+        <mat-label>Start Date:</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="startDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+  <mat-label>Contract Type</mat-label>
+  <mat-select formControlName="employmentType" required>
+    <mat-option value="CDI">Contrat à durée indéterminée (CDI)</mat-option>
+    <mat-option value="CDD">Contrat à durée déterminée (CDD)</mat-option>
+    <mat-option value="CDD_OD">CDD à objet défini</mat-option>
+    <mat-option value="CTT">Contrat de travail temporaire</mat-option>
+    <mat-option value="CTP">Contrat de travail à temps partiel</mat-option>
+    <mat-option value="CTI">Contrat de travail intermittent</mat-option>
+    <mat-option value="CTS">Contrat de travail saisonnier</mat-option>
+  </mat-select>
+</mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Sanctions</mat-label>
+        <textarea matInput formControlName="sanctions" required></textarea>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Voluntary self-identification of disability:</mat-label>
+        <mat-select formControlName="handicap" required>
+          <mat-option value="yes">YES, I HAVE A DISABILITY</mat-option>
+          <mat-option value="no">NO, I DON'T HAVE A DISABILITY</mat-option>
+          <mat-option value="not_answer">NO, I DON'T WISH TO ANSWER</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field class="w-full">
+        <mat-label>Salary</mat-label>
+        <input matInput type="number" formControlName="salary" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currency">
+          <mat-option value="USD">USD</mat-option>
+          <mat-option value="EUR">EUR</mat-option>
+          <mat-option value="GBP">GBP</mat-option>
+          <mat-option value="CHF">CHF</mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+      <mat-form-field class="w-full">
+        <mat-label>Employee Career History</mat-label>
+        <textarea matInput formControlName="employeeCarreerHistory" required></textarea>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Level</mat-label>
+        <input matInput type="number" formControlName="parentId" required>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Emplacement</mat-label>
+        <input matInput type="text" formControlName="emplacement" required>
+      </mat-form-field>
+    
+      <label style="font-size: 12px; color: rgba(var(--fuse-text))" for="photo"><strong>Photo*</strong> </label>
+      <input id="input-file"  hidden (change)="onFileChange($event, 'photo')"  accept="image/*"  formControlName="photo" required  type="file"   />
+      <label  for="input-file">   <i class="fa-solid fa-upload"></i> Choose your photo(.img*) :&nbsp;{{filename}}</label>
+      
+      
+      
+      
+      <label style="font-size: 12px; color: rgba(var(--fuse-text))"  for="cv"> <strong>(PDF only)*</strong> </label>
+      <input id="input-filee"  hidden (change)="onFileChangee($event, 'cv')"  accept="application/*"  formControlName="cv" required  type="file"   />
+      <label  for="input-filee">   <i class="fa-solid fa-upload"></i> Choose your cv(.pdf*) :&nbsp;{{filenamee}}</label>
+      
+     
+  <mat-form-field class="w-full">
+    <mat-label>Performance Rate</mat-label>
+    <input matInput type="number" formControlName="performanceRate">
+  </mat-form-field>
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" (click)="submitForm()">Add Employee</button>
+      </div>
+    </form>
+    
+  </div>
+</body>
+</html>

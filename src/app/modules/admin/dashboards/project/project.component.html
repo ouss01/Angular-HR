@@ -1,0 +1,102 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{t('welcome-back')}} {{currentuser.username}} , {{currentuser.roles}} </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"></mat-icon>
+                            <div class="ml-1.5 leading-6 truncate text-secondary"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="bg-primary"
+                        mat-flat-button
+                        [color]="'primary'"
+                        routerLink="/dashboards/crypto">
+                        <span class="ml-2">Ajouté Des Employées</span>
+                    </button>
+                    <button
+                    class="bg-primary"
+                    mat-flat-button
+                    [color]="'primary'"
+                    routerLink="/dashboards/analytics">
+                    <span class="ml-2">Tous Les Employées</span>
+                </button>
+                    <button
+                        class="bg-primary"
+                        mat-flat-button
+                        [color]="'primary'"
+                        routerLink="/dashboards/finance">
+                        <span class="ml-2">Onboarding</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Project selector -->
+            <div
+                class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
+                matRipple
+                [matMenuTriggerFor]="projectsMenu">
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div class="font-medium leading-6 truncate">{{selectedProject}}</div>
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_mini:chevron-down'"></mat-icon>
+                    </div>
+                </div>
+                <mat-menu
+                    #projectsMenu="matMenu"
+                    [xPosition]="'before'">
+                    <button
+                        mat-menu-item
+                        (click)="selectedProject='Organigramme'">
+                    </button>
+                    
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            
+            <!-- Tabs -->
+            <mat-tab-group
+                class="sm:px-2"
+                mat-stretch-tabs="false"
+                [animationDuration]="'0'">
+
+                <!-- Home -->
+                <mat-tab label="Home">
+                    <ng-template matTabContent>
+                       
+                        <div *ngIf="dataa" >
+                            <app-d3-org-chart [data]="dataa"></app-d3-org-chart>    
+                        </div>
+                                
+                    </ng-template>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+    </div>
+
+</div>
