@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
@@ -31,18 +31,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
 })
 export class FinanceComponent implements OnInit {
-    selectedFiles: { [key: string]: File } = {};    
-    filename='None'
- photo:any
-    cv: any;
-    filenamee='None';
+  selectedFiles: { [key: string]: File } = {};
+  filename = 'None';
+  photo: any;
+  cv: any;
+  contractFileName = 'None';
+  certificationFileName = 'None';
+  diplomaFileName = 'None';
   horizontalStepperForm: UntypedFormGroup;
-item: any;
+  feedbackForm: FormGroup;
 
   constructor(private _formBuilder: UntypedFormBuilder) {}
 
   ngOnInit(): void {
-    // Horizontal stepper form
+    // Initialize horizontal stepper form
     this.horizontalStepperForm = this._formBuilder.group({
       step1: this._formBuilder.group({
         firstName: ['', Validators.required],
@@ -51,68 +53,112 @@ item: any;
         country: ['', Validators.required],
         language: ['', Validators.required],
         contractType: [''],
-       file:['', Validators.required]
+        file: [''],
       }),
       step2: this._formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        userName: ['', Validators.required],
-        about: ['']
+        Username: [''],
+        Poste: [''],
+        Société: [''],
+        about: [''],
       }),
       step3: this._formBuilder.group({
-        byEmail: this._formBuilder.group({
-          companyNews: [false],
-          featuredProducts: [false],
-          messages: [false]
-        }),
-        pushNotifications: ['everything', Validators.required]
-      })
+        accountActivated: ['activated', Validators.required],
+        remoteWork: [false],
+        onSiteWork: [false],
+        workHours: ['', Validators.required],
+        documentSubmission: ['upTo3DaysBefore', Validators.required],
+        idCardApplication: [false],
+        motorizedParking: [false],
+        emergencyContact: ['', Validators.required],
+      }),
+    });
+
+    // Initialize feedback form
+    this.feedbackForm = this._formBuilder.group({
+      onboardingRating: ['', Validators.required],
+      positiveFeedback: [''],
+      improvementsFeedback: [''],
+      adviceFeedback: [''],
     });
   }
 
-  resetForm(): void {
-    this.horizontalStepperForm.reset();
+  onSubmitFeedback(): void {
+    if (this.feedbackForm.valid) {
+      const feedbackData = this.feedbackForm.value;
+      console.log('Feedback submitted: ', feedbackData);
+      alert('Félicitations ! Vous avez terminé le processus d\'onboarding.');
+      // Here you can submit the feedbackData to a backend or service
+      // e.g., this.feedbackService.submitFeedback(feedbackData);
+    } else {
+      console.log('Veuillez remplir tous les champs nécessaires.');
+    }
   }
 
+  resetForm(): void {
+    // Reset feedback form
+    this.feedbackForm.reset();
+  }
+ 
   onSubmit(): void {
     // Process the form submission
     console.log(this.horizontalStepperForm.value);
   }
 
-  handleCVUpload(event: any): void {
-    const file = event.target.files[0];
-    console.log(file);
-    // Handle the CV upload logic
-  }
-  
-
-  downloadContract(): void {
-    const link = document.createElement('a');
-    link.href = 'assets/contract.pdf';
-    link.download = 'Contract.pdf';
-    link.click();
-  }
-  fileName:'No uploads'|any;
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      // Change the file name as needed (e.g., prepend 'uploaded_' to the file name)
-      this.fileName = 'uploaded_' + file.name;
-      // Perform additional actions such as uploading the file to the server
-      // For example, you can use HttpClient to upload the file to the server
-      // this.uploadFile(file);
-    }
-  }
-  onFileChangee(event: any, field: string): void {
+  handleFileUpload(event: any, type: string): void {
     const file = event.target.files[0];
     if (file) {
-        this.selectedFiles[field] = file;
-        
-        this.photo=event.target.files[0]
-        this.filename=event.target.files[0].name}
-    
+      this.selectedFiles[type] = file;
+      switch (type) {
+        case 'cv':
+          this.cv = file;
+          this.contractFileName = file.name;
+          break;
+        case 'certification':
+          this.certificationFileName = file.name;
+          break;
+        case 'diploma':
+          this.diplomaFileName = file.name;
+          break;
+        default:
+          console.error('Unknown file type');
+      }
+
+      console.log(`${type} uploaded:`, file.name);
+    }
   }
 
+  downloadContract(): void {
+    // Define the path to the contract file (ensure it's available in your Angular project's assets folder)
+    const fileUrl = 'assets/contract.pdf';
+  
+    // Create an anchor element dynamically
+    const link = document.createElement('a');
+    link.href = fileUrl; // The path to the contract file
+    link.target = '_blank'; // Open in a new tab (optional)
+    link.download = 'Contract.pdf'; // Set the default file name for download
+  
+    // Trigger the download by programmatically clicking the anchor element
+    link.click();
+  
+    // Clean up the dynamically created element
+    link.remove();
+  }
+
+  resetFile(type: string): void {
+    this.selectedFiles[type] = null;
+    switch (type) {
+      case 'cv':
+        this.contractFileName = 'None';
+        break;
+      case 'certification':
+        this.certificationFileName = 'None';
+        break;
+      case 'diploma':
+        this.diplomaFileName = 'None';
+        break;
+      default:
+        console.error('Unknown file type');
+    }
+    console.log(`${type} reset`);
+  }
 }

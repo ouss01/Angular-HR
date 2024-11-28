@@ -16,7 +16,7 @@ import { EmployeeService } from 'app/services/employee.service';
 import { DateTime } from 'luxon';
 import { ApexOptions, ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 @Component({
     selector       : 'crypto',
     templateUrl    : './crypto.component.html',
@@ -39,7 +39,7 @@ export class CryptoComponent implements OnInit, OnDestroy
     employeeForm:any=FormGroup
     selectedFiles: { [key: string]: File } = {};    
     filename='None'
- photo:any
+    photo:any
     cv: any;
     filenamee='None';
     /**
@@ -210,7 +210,7 @@ export class CryptoComponent implements OnInit, OnDestroy
                     this.employeeservice.addEmployee(formData).subscribe(
                         response => {
                             console.log('Employee added successfully:', response);
-                            sweetAlert("Employee added Successfully!");
+                            Swal.fire("Employee added Successfully!");
                             this.employeeForm.reset(); 
                             this.filename='';
                             this.filenamee='';

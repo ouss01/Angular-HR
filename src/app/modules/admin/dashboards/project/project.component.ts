@@ -85,7 +85,6 @@ export class ProjectComponent implements OnInit, OnDestroy
             'https://gist.githubusercontent.com/bumbeishvili/dc0d47bc95ef359fdc75b63cd65edaf2/raw/c33a3a1ef4ba927e3e92b81600c8c6ada345c64b/orgChart.json'
           ).then((data) => {
             this.dataa = data;
-            console.log(this.dataa,"okok");
           });
 
         this.getEmployee()

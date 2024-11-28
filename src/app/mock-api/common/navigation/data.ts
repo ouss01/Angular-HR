@@ -14,28 +14,28 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Organigramme',
                 type : 'basic',
                 icon : 'heroicons_outline:clipboard-document-check',
-                link : '/dashboards/project',
+                link : '/dashboards/organigram',
             },
             {
                 id   : 'dashboards.Dashboard Des Employées',
                 title: 'Dashboard Des Employées',
                 type : 'basic',
                 icon : 'heroicons_outline:chart-pie',
-                link : '/dashboards/analytics',
+                link : '/dashboards/employees',
             },
             {
                 id   : 'dashboards.Onboarding',
                 title: 'Onboarding',
                 type : 'basic',
                 icon : 'heroicons_outline:banknotes',
-                link : '/dashboards/finance',
+                link : '/dashboards/onBoarding',
             },
             {
                 id   : 'dashboards.Gestion des employées',
                 title: 'Gestion des employées',
                 type : 'collapsable',
                 icon : 'heroicons_outline:currency-dollar',
-                link : '/dashboards/crypto',
+                link : '/dashboards/employeesManagement',
                 children: [
             
                     {
@@ -43,44 +43,40 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         title: 'Ajout Des Employées',
                         type : 'basic',
                         icon : 'heroicons_outline:user-group',
-                        link : '/dashboards/crypto',
+                        link : '/dashboards/employeesManagement',
+                    },
+                ]
+                
+            },
+            {
+                id   : 'dashboards.Gestion des employées',
+                title: 'Gestion des Carriéres',
+                type : 'collapsable',
+                icon : 'heroicons_outline:user-group',
+                 link : 'apps/contacts',
+                children: [
+            
+                    {
+                        id   : 'apps.Ajout Des Employées',
+                        title: 'Gestion des promotions',
+                        type : 'basic',
+                        icon : 'heroicons_outline:user-group',
+                        link : '/apps/promotion',
+                    },          
+                    {
+                        id   : 'apps.Ajout Des Employées',
+                        title:  ' Gestion des fins d’activité / retraites ',
+                        type : 'basic',
+                        icon : 'heroicons_outline:user-group',
+                        link : '/apps/fin-activity',
+                       
                     },
                 ]
                 
             },
         ],
     },
-    {
-        id      : 'apps',
-        title   : '',
-        subtitle: '',
-        type    : 'group',
-        icon    : 'heroicons_outline:home',
-        children: [
-            
-            {
-                id   : 'apps.Gestion des Carrières',
-                title: 'Gestion des Carrières',
-                type : 'basic',
-                icon : 'heroicons_outline:user-group',
-                link : '/apps/contacts',
-                children:
-                    [
-                        
-
-
-                    
-                    
-                           
-                        
-
-                    ],
-            }
-            
-           
-           
-        ],
-    },
+   
     
     
     

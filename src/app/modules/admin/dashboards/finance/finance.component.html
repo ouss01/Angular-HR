@@ -1,0 +1,672 @@
+
+<style>
+    .file-info {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+    }
+  
+    .file-info mat-icon {
+      color: green;
+      margin-right: 5px;
+    }
+  
+    .page-container {
+      padding: 20px; /* Increased padding */
+    }
+  
+    .header {
+      padding: 20px; /* Increased padding */
+    }
+  
+    .breadcrumbs {
+      font-size: 1.2rem; /* Increased font size */
+    }
+  
+    .title {
+      font-size: 2rem; /* Increased font size */
+    }
+  
+    .section-title {
+      font-size: 2.5rem; /* Increased font size */
+      margin-top: 20px; /* Increased margin */
+    }
+  
+    .form-container {
+      padding: 20px; /* Increased padding */
+      font-size: 1.2rem; /* Increased font size */
+    }
+  
+    .step-label {
+      font-size: 1.5rem; /* Increased font size */
+    }
+  
+    .input-field {
+      font-size: 1.2rem; /* Increased font size */
+      margin-bottom: 15px; /* Increased margin */
+    }
+  
+    .icon-size-5 {
+      font-size: 1.5rem; /* Increased icon size */
+    }
+  
+    .icon-size-14 {
+      font-size: 2rem; /* Increased icon size */
+    }
+  
+    .upload-button {
+      font-size: 1.2rem; /* Increased font size */
+      padding: 10px 20px; /* Increased padding */
+    }
+  </style>
+
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+      <div class="flex-1 min-w-0">
+          <!-- Breadcrumbs -->
+          <div class="flex flex-wrap items-center font-meduim text-4xl">
+              <div>
+                  <a class="whitespace-nowrap text-primary-500">Onboarding</a>
+              </div>
+              
+          </div>
+          <!-- Title -->
+          <div class="mt-2">
+              <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                Processus de L'Onboarding 
+              </h2>
+          </div>
+      </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+
+      <div class="max-w-7xl">
+
+         
+
+          <!-- Horizontal stepper -->
+          <div class="mt-16 mb-8 text-5xl font-bold">Cycles de l'Onboarding </div>
+
+          <form
+              class="p-4 bg-card shadow rounded overflow-hidden"
+              [formGroup]="horizontalStepperForm">
+              <mat-horizontal-stepper
+                  [linear]="true"
+                  #horizontalStepper>
+                  <mat-step
+                      [formGroupName]="'step1'"
+                      [stepControl]="horizontalStepperForm.get('step1')"
+                      #horizontalStepperStep1>
+                      <ng-template matStepLabel>Informations Générales</ng-template>
+                      <p class="my-6 font-medium">
+                          Remplir Vos Informations Pour Complétér votre Onboarding
+                      </p>
+                      <div class="flex flex-col gt-xs:flex-row">
+                        <mat-form-field class="flex-auto gt-xs:pr-3">
+                            <input
+                                matInput
+                                formControlName="firstName"
+                                [placeholder]="'First name'"
+                                required>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto gt-xs:pl-3">
+                            <input
+                                matInput
+                                [formControlName]="'lastName'"
+                                [placeholder]="'Last name'"
+                                required>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </mat-form-field>
+                    </div>
+                      <div class="flex">
+                          <mat-form-field class="flex-auto">
+                              <input
+                                  matInput
+                                  [formControlName]="'email'"
+                                  [placeholder]="'Email Address'"
+                                  required>
+                              <mat-icon
+                                  class="icon-size-5"
+                                  matPrefix
+                                  [svgIcon]="'heroicons_solid:envelope'"></mat-icon>
+                          </mat-form-field>
+                      </div>
+                      <div class="flex flex-col gt-xs:flex-row">
+                          <mat-form-field class="flex-auto gt-xs:pr-3">
+                              <mat-select
+                                  [formControlName]="'country'"
+                                  [placeholder]="'Country / Region'"
+                                  required>
+                                  <mat-option value="country-1">France</mat-option>
+                                  <mat-option value="country-2">Luxembourg</mat-option>
+                                  <mat-option value="country-3">Belgique</mat-option>
+                              </mat-select>
+                              <mat-icon
+                                  class="icon-size-5"
+                                  matPrefix
+                                  [svgIcon]="'heroicons_solid:map-pin'"></mat-icon>
+                          </mat-form-field>
+                          <mat-form-field class="flex-auto gt-xs:pl-3">
+                              <mat-select
+                                  [formControlName]="'language'"
+                                  [placeholder]="'Language'"
+                                  required>
+                                  <mat-option value="language-1">Français</mat-option>
+                                  <mat-option value="language-2">English</mat-option>
+                                  <mat-option value="language-3">Deutch</mat-option>
+                              </mat-select>
+                              <mat-icon
+                                  class="icon-size-5"
+                                  matPrefix
+                                  [svgIcon]="'heroicons_solid:language'"></mat-icon>
+                          </mat-form-field>
+                          <mat-form-field class="flex-auto gt-xs:pl-3">
+                            <mat-select
+                                [formControlName]="'Contract Type'"
+                                [placeholder]="'Contract Type'"
+                                required>
+                                <mat-option value="Contract Type-1">CDI</mat-option>
+                                <mat-option value="Contract Type-2">CDD</mat-option>
+                                <mat-option value="Contract Type-3">SIVP</mat-option>
+                            </mat-select>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:language'"></mat-icon>
+                        </mat-form-field>
+                  
+                       
+                        <div class="container">
+                            <!-- Upload Contract -->
+                            <p>Télécharger votre contrat de travail:</p>
+                            <br>
+                            <div class="mt-4 sm:mt-0">
+                                <button mat-flat-button color="primary" (click)="downloadContract()">
+                                  <mat-icon svgIcon="heroicons_outline:download"></mat-icon>
+                                  <span class="ml-2 mr-1">Download Contract</span>
+                                </button>
+                              </div>
+                            
+                        <br>
+                            <!-- Upload Certifications -->
+                            <p>Ajouter Vos Certifications:</p>
+                            <br>
+                            <div class="mt-4 sm:mt-0">
+                                <input type="file" accept=".pdf" #certificationInput (change)="handleFileUpload($event, 'certification')" hidden>
+                                <button mat-flat-button color="primary" (click)="certificationInput.click()">
+                                    <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                                    <span class="ml-2 mr-1">Upload Certifications</span>
+                                </button>
+                                <div class="file-info">
+                                    <span>{{ certificationFileName }}</span>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <!-- Upload Diplomas -->
+                            <p>Ajouter Vos Diplômes:</p>
+                            <br>
+                            <div class="mt-4 sm:mt-0">
+                                <input type="file" accept=".pdf" #diplomaInput (change)="handleFileUpload($event, 'diploma')" hidden>
+                                <button mat-flat-button color="primary" (click)="diplomaInput.click()">
+                                    <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                                    <span class="ml-2 mr-1">Upload Diplôme</span>
+                                </button>
+                                <div class="file-info">
+                                    <span>{{ diplomaFileName }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    
+                      <!-- Display uploaded file name and success message -->
+                      <div  class="file-info">
+                    
+                        <span>{{ filename }} </span>
+                      </div>
+                    </div>
+                      <div class="flex justify-end">
+                        <button
+                            class="px-8"
+                            mat-flat-button
+                            color="primary"
+                            type="button"
+                            matStepperNext
+                            [disabled]="false">
+                            Next
+                            </button>
+                      </div>
+                      <div *ngIf="confirmationMessageVisible" class="mt-4 text-sm text-gray-600">
+                        Un message de confirmation a été envoyé à votre manager. Veuillez attendre sa confirmation.
+                    </div>
+                  </mat-step>
+
+                  <mat-step
+                      [formGroupName]="'step2'"
+                      [stepControl]="horizontalStepperForm.get('step2')"
+                      #horizontalStepperStep2>
+                      <ng-template matStepLabel>Profile</ng-template>
+                      <p class="my-6 font-medium">
+                          People here will get to know you with this information
+                      </p>
+                      <div class="flex flex-col gt-xs:flex-row">
+                         
+                      </div>
+                      <div class="flex">
+                          <mat-form-field class="flex-auto">
+                              <input
+                                  matInput
+                                  [formControlName]="'userName'"
+                                  [placeholder]="'Username'"
+                                  required>
+                              <span matPrefix>www.BestHR.com/</span>
+                          </mat-form-field>
+                           <mat-form-field class="flex-auto gt-xs:pr-3">
+                              <input
+                                  matInput
+                                  [formControlName]="'Poste'"
+                                  [placeholder]="'Poste'"
+                                  required>
+                              <mat-icon
+                                  class="icon-size-5"
+                                  matPrefix
+                                  [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                          </mat-form-field>
+                          <mat-form-field class="flex-auto gt-xs:pl-3">
+                              <input
+                                  matInput
+                                  [formControlName]="'Société'"
+                                  [placeholder]="'Société'"
+                                  required>
+                              <mat-icon
+                                  class="icon-size-5"
+                                  matPrefix
+                                  [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                          </mat-form-field>
+                      </div>
+                      <div class="flex">
+                          <mat-form-field class="flex-auto">
+                              <textarea
+                                  matInput
+                                  [formControlName]="'à propos poste'"
+                                  [placeholder]="'à propos poste'"
+                                  [rows]="3"></textarea>
+                              <mat-icon
+                                  class="icon-size-5"
+                                  matPrefix
+                                  [svgIcon]="'heroicons_solid:bars-3-bottom-left'"></mat-icon>
+                          </mat-form-field>
+                      </div>
+                      <div class="flex justify-end">
+                          <button
+                              class="px-8 mr-2"
+                              mat-flat-button
+                              [color]="'accent'"
+                              type="button"
+                              matStepperPrevious>
+                              Back
+                          </button>
+                          <button
+                              class="px-8 mr-2"
+                              mat-flat-button
+                              [color]="'primary'"
+                              [disabled]="horizontalStepperStep2.stepControl.pristine || horizontalStepperStep2.stepControl.invalid"
+                              type="button"
+                              matStepperNext>
+                              Next
+                          </button>
+                      </div>
+                  </mat-step>
+                  
+                  <mat-step
+                        [formGroupName]="'step3'"
+                        [stepControl]="horizontalStepperForm.get('step3')">
+                        <ng-template matStepLabel>Orientation</ng-template>
+                        <p class="my-6 font-medium">
+                            Veuillez configurer vos informations pour compléter l'onboarding.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row">
+                            <!-- Activation de votre compte -->
+                            <div class="flex flex-col sm:w-1/2">
+                                <span class="font-medium mb-2">Activation de votre compte</span>
+                                <mat-radio-group
+                                    class="flex flex-col"
+                                    [color]="'primary'"
+                                    [formControlName]="'accountActivated'">
+                                    <mat-radio-button class="mb-2" [value]="'activated'">
+                                        Votre compte est déjà activé.
+                                    </mat-radio-button>
+                                    <mat-radio-button class="mb-2" [value]="'pending'">
+                                        Votre compte est en attente d'activation.
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+
+                            <!-- Durée de travail selon la zone horaire -->
+                            <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                                <span class="font-medium mb-2">Durée de travail selon la zone horaire</span>
+                                <div class="flex flex-col">
+                                    <mat-checkbox
+                                        class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'remoteWork'">
+                                        Travail à distance
+                                    </mat-checkbox>
+                                    <mat-checkbox
+                                        class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'onSiteWork'">
+                                        Travail sur site
+                                    </mat-checkbox>
+                                    <div class="mt-4">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Nombre d'heures de travail par semaine</mat-label>
+                                            <input matInput type="number" formControlName="workHours" placeholder="Exemple: 40 heures">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row mt-8">
+                            <!-- Présentation des documents sur site -->
+                            <div class="flex flex-col sm:w-1/2">
+                                <span class="font-medium mb-2">Présentation de vos documents sur site</span>
+                                <mat-radio-group
+                                    class="flex flex-col"
+                                    [color]="'primary'"
+                                    [formControlName]="'documentSubmission'">
+                                    <mat-radio-button class="mb-2" [value]="'upTo3DaysBefore'">
+                                        Jusqu'à 3 jours ouvrables avant la date de début (si local)
+                                    </mat-radio-button>
+                                    <mat-radio-button class="mb-2" [value]="'upTo3DaysAfter'">
+                                        Jusqu'à 3 jours ouvrables après la date de début
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+
+                            <!-- Obtention du badge et ID -->
+                            <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                                <span class="font-medium mb-2">Obtention de votre badge et ID</span>
+                                <p>Vous devrez remplir une demande de carte d'identité et soumettre une photo, comme indiqué sur notre site Web.</p>
+                                <mat-checkbox
+                                    class="mb-1"
+                                    [color]="'primary'"
+                                    [formControlName]="'idCardApplication'">
+                                    Demande de carte d'identité soumise
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row mt-8">
+                            <!-- Parking pour les employés motorisés -->
+                            <div class="flex flex-col sm:w-1/2">
+                                <span class="font-medium mb-2">Parking pour les employés motorisés</span>
+                                <mat-checkbox
+                                    class="mb-1"
+                                    [color]="'primary'"
+                                    [formControlName]="'motorizedParking'">
+                                    J'ai besoin d'un parking pour employés motorisés
+                                </mat-checkbox>
+                            </div>
+
+                            <!-- Alertes d'urgence -->
+                            <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                                <span class="font-medium mb-2">Alertes d'urgence</span>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Contact d'urgence</mat-label>
+                                    <input matInput type="text" formControlName="emergencyContact" placeholder="Nom et numéro de téléphone">
+                                </mat-form-field>
+                                <p class="mt-2">Nous enverrons des alertes par SMS ou email pour notifier la communauté en cas de situations potentiellement dangereuses.</p>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="flex justify-end mt-8">
+                            <button
+                                class="px-8 mr-2"
+                                mat-flat-button
+                                [color]="'accent'"
+                                type="button"
+                                matStepperPrevious>
+                                Retour
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="button"
+                                matStepperNext>
+                                Suivant
+                            </button>
+                        </div>
+                    </mat-step>
+
+                    <mat-step
+                    [formGroupName]="'step4'"
+                    [stepControl]="horizontalStepperForm.get('step4')">
+                    <ng-template matStepLabel>Formations</ng-template>
+                    <p class="my-6 font-medium">
+                        Veuillez sélectionner les formations que vous souhaitez suivre, ou proposez des formations qui ne sont pas listées.
+                    </p>
+                    
+                    <!-- Liste des formations -->
+                    <div class="flex flex-col sm:flex-row">
+                        <!-- Formation 1 -->
+                        <div class="flex flex-col sm:w-1/2">
+                            <span class="font-medium mb-2">Formation 1: Sécurité au travail</span>
+                            <mat-checkbox
+                                class="mb-1"
+                                [color]="'primary'"
+                                [formControlName]="'workplaceSafety'">
+                                Je souhaite suivre la formation sur la sécurité au travail.
+                            </mat-checkbox>
+                        </div>
+                
+                        <!-- Formation 2 -->
+                        <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                            <span class="font-medium mb-2">Formation 2: Gestion du temps</span>
+                            <mat-checkbox
+                                class="mb-1"
+                                [color]="'primary'"
+                                [formControlName]="'timeManagement'">
+                                Je souhaite suivre la formation sur la gestion du temps.
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                
+                    <div class="flex flex-col sm:flex-row mt-8">
+                        <!-- Formation 3 -->
+                        <div class="flex flex-col sm:w-1/2">
+                            <span class="font-medium mb-2">Formation 3: Leadership et Communication</span>
+                            <mat-checkbox
+                                class="mb-1"
+                                [color]="'primary'"
+                                [formControlName]="'leadershipCommunication'">
+                                Je souhaite suivre la formation sur le leadership et la communication.
+                            </mat-checkbox>
+                        </div>
+                
+                        <!-- Formation 4 -->
+                        <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                            <span class="font-medium mb-2">Formation 4: Développement personnel</span>
+                            <mat-checkbox
+                                class="mb-1"
+                                [color]="'primary'"
+                                [formControlName]="'personalDevelopment'">
+                                Je souhaite suivre la formation sur le développement personnel.
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                
+                    <div class="flex flex-col sm:flex-row mt-8">
+                        <!-- Formation 5 -->
+                        <div class="flex flex-col sm:w-1/2">
+                            <span class="font-medium mb-2">Formation 5: Gestion des conflits</span>
+                            <mat-checkbox
+                                class="mb-1"
+                                [color]="'primary'"
+                                [formControlName]="'conflictManagement'">
+                                Je souhaite suivre la formation sur la gestion des conflits.
+                            </mat-checkbox>
+                        </div>
+                
+                        <!-- Formation 6 -->
+                        <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                            <span class="font-medium mb-2">Formation 6: Travail d'équipe</span>
+                            <mat-checkbox
+                                class="mb-1"
+                                [color]="'primary'"
+                                [formControlName]="'teamWork'">
+                                Je souhaite suivre la formation sur le travail d'équipe.
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                
+                    <!-- Formation personnalisée -->
+                    <div class="flex flex-col sm:w-1/2 mt-8">
+                        <span class="font-medium mb-2">Formation personnalisée</span>
+                        <mat-form-field class="mb-2" appearance="fill">
+                            <mat-label>Proposez une autre formation</mat-label>
+                            <input matInput [formControlName]="'customTraining'" placeholder="Suggérer une formation">
+                        </mat-form-field>
+                    </div>
+                
+                    <!-- Notifications par Email -->
+                    <div class="flex flex-col sm:w-1/2 mt-8">
+                        <span class="font-medium mb-2">Recevoir des notifications de formation par email</span>
+                        <mat-checkbox
+                            class="mb-1"
+                            [color]="'primary'"
+                            [formControlName]="'trainingUpdatesEmail'">
+                            Oui, j'aimerais recevoir des notifications par email concernant les formations.
+                        </mat-checkbox>
+                    </div>
+                
+                    <!-- Notifications Push -->
+                    <div class="flex flex-col sm:w-1/2 mt-8 sm:mt-0 sm:ml-16">
+                        <span class="font-medium mb-2">Notifications Push pour les formations</span>
+                        <mat-radio-group
+                            class="flex flex-col"
+                            [color]="'primary'"
+                            [formControlName]="'trainingPushNotifications'">
+                            <mat-radio-button class="mb-2" [value]="'everything'">
+                                Toutes les notifications
+                            </mat-radio-button>
+                            <mat-radio-button class="mb-2" [value]="'important'">
+                                Seulement les notifications importantes
+                            </mat-radio-button>
+                            <mat-radio-button [value]="'no-push'">
+                                Pas de notifications push
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                
+                    <!-- Boutons de navigation -->
+                    <div class="flex justify-end mt-8">
+                        <button
+                            class="px-8 mr-2"
+                            mat-flat-button
+                            [color]="'accent'"
+                            type="button"
+                            matStepperPrevious>
+                            Retour
+                        </button>
+                        <button
+                            class="px-8"
+                            mat-flat-button
+                            [color]="'primary'"
+                            type="button"
+                            matStepperNext>
+                            Suivant
+                        </button>
+                    </div>
+                </mat-step>
+                
+                
+
+                <mat-step>
+                    <ng-template matStepLabel>Finalisation</ng-template>
+                    <p class="my-6 font-medium">
+                        Félicitations ! Vous avez terminé notre processus d'onboarding. Nous vous remercions pour votre participation. Avant de terminer, nous aimerions connaître votre avis.
+                    </p>
+                  
+                    <!-- Formulaire de feedback -->
+                    <div class="mt-6">
+                      <h3 class="font-medium mb-4">Veuillez évaluer votre expérience d'onboarding :</h3>
+                  
+                      <!-- Évaluation du processus -->
+                      <mat-form-field appearance="fill" class="w-full mb-4">
+                        <mat-label>Comment évalueriez-vous le processus d'onboarding ?</mat-label>
+                        <mat-select [formControl]="feedbackForm.get('onboardingRating')">
+                          <mat-option value="excellent">Excellent</mat-option>
+                          <mat-option value="good">Bon</mat-option>
+                          <mat-option value="average">Moyenne</mat-option>
+                          <mat-option value="poor">Mauvais</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  
+                      <!-- Commentaire supplémentaire sur ce que l'utilisateur a aimé -->
+                      <mat-form-field appearance="fill" class="w-full mb-4">
+                        <mat-label>Quels aspects du processus d'onboarding aimez-vous ?</mat-label>
+                        <textarea matInput [formControl]="feedbackForm.get('positiveFeedback')" rows="4"></textarea>
+                      </mat-form-field>
+                  
+                      <!-- Suggestions d'amélioration -->
+                      <mat-form-field appearance="fill" class="w-full mb-4">
+                        <mat-label>Quelles améliorations suggéreriez-vous ?</mat-label>
+                        <textarea matInput [formControl]="feedbackForm.get('improvementsFeedback')" rows="4"></textarea>
+                      </mat-form-field>
+                  
+                      <!-- Conseils pour les futurs utilisateurs -->
+                      <mat-form-field appearance="fill" class="w-full mb-4">
+                        <mat-label>Des conseils pour les futurs utilisateurs ?</mat-label>
+                        <textarea matInput [formControl]="feedbackForm.get('adviceFeedback')" rows="4"></textarea>
+                      </mat-form-field>
+                  
+                    </div>
+                  
+                    <div class="flex justify-end mt-8">
+                      <button
+                          class="px-8 mr-2"
+                          mat-flat-button
+                          [color]="'accent'"
+                          type="button"
+                          matStepperPrevious>
+                          Retour
+                      </button>
+                      <button
+                          class="px-8"
+                          mat-flat-button
+                          [color]="'primary'"
+                          type="button"
+                          (click)="onSubmitFeedback()">
+                          Soumettre
+                      </button>
+                      <button
+                          class="px-8"
+                          mat-flat-button
+                          [color]="'primary'"
+                          type="button"
+                          (click)="resetForm()">
+                          Réinitialiser
+                      </button>
+                    </div>
+                  </mat-step>
+                  
+                  
+              </mat-horizontal-stepper>
+          </form>
+
+         

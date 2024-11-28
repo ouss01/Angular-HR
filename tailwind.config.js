@@ -1,7 +1,7 @@
 const path = require('path');
 const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
-const generatePalette = require(path.resolve(__dirname, ('src/@fuse/tailwind/utils/generate-palette')));
+const generatePalette = require(path.resolve(__dirname, 'src/@fuse/tailwind/utils/generate-palette'));
 
 /**
  * Custom palettes
@@ -64,10 +64,13 @@ const themes = {
  * Tailwind configuration
  */
 const config = {
-    darkMode   : 'class',
-    content    : ['./src/**/*.{html,scss,ts}'],
-    important  : true,
-    theme      : {
+    darkMode: 'class', // Enable dark mode
+    content: [
+        './src/**/*.{html,css,ts}', // Ensure the content paths match your actual project structure
+        './src/app/**/*.{html,css,ts}' // Added to catch files under app directory
+    ],
+    important: true, // Apply the `!important` flag to all Tailwind CSS classes
+    theme: {
         fontSize: {
             'xs'  : '0.625rem',
             'sm'  : '0.75rem',
@@ -85,42 +88,42 @@ const config = {
             '9xl' : '6rem',
             '10xl': '8rem'
         },
-        screens : {
+        screens: {
             sm: '600px',
             md: '960px',
             lg: '1280px',
             xl: '1440px'
         },
-        extend  : {
-            animation               : {
+        extend: {
+            animation: {
                 'spin-slow': 'spin 3s linear infinite'
             },
-            colors                  : {
+            colors: {
                 gray: colors.slate
             },
-            flex                    : {
+            flex: {
                 '0': '0 0 auto'
             },
-            fontFamily              : {
+            fontFamily: {
                 sans: `"Inter var", ${defaultTheme.fontFamily.sans.join(',')}`,
                 mono: `"IBM Plex Mono", ${defaultTheme.fontFamily.mono.join(',')}`
             },
-            opacity                 : {
+            opacity: {
                 12: '0.12',
                 38: '0.38',
                 87: '0.87'
             },
-            rotate                  : {
+            rotate: {
                 '-270': '270deg',
                 '15'  : '15deg',
                 '30'  : '30deg',
                 '60'  : '60deg',
                 '270' : '270deg'
             },
-            scale                   : {
+            scale: {
                 '-1': '-1'
             },
-            zIndex                  : {
+            zIndex: {
                 '-1'   : -1,
                 '49'   : 49,
                 '60'   : 60,
@@ -132,7 +135,7 @@ const config = {
                 '9999' : 9999,
                 '99999': 99999
             },
-            spacing                 : {
+            spacing: {
                 '13': '3.25rem',
                 '15': '3.75rem',
                 '18': '4.5rem',
@@ -141,8 +144,6 @@ const config = {
                 '30': '7.5rem',
                 '50': '12.5rem',
                 '90': '22.5rem',
-
-                // Bigger values
                 '100': '25rem',
                 '120': '30rem',
                 '128': '32rem',
@@ -158,8 +159,6 @@ const config = {
                 '360': '90rem',
                 '400': '100rem',
                 '480': '120rem',
-
-                // Fractional values
                 '1/2': '50%',
                 '1/3': '33.333333%',
                 '2/3': '66.666667%',
@@ -167,103 +166,84 @@ const config = {
                 '2/4': '50%',
                 '3/4': '75%'
             },
-            minHeight               : ({theme}) => ({
+            minHeight: ({ theme }) => ({
                 ...theme('spacing')
             }),
-            maxHeight               : {
+            maxHeight: {
                 none: 'none'
             },
-            minWidth                : ({theme}) => ({
+            minWidth: ({ theme }) => ({
                 ...theme('spacing'),
                 screen: '100vw'
             }),
-            maxWidth                : ({theme}) => ({
+            maxWidth: ({ theme }) => ({
                 ...theme('spacing'),
                 screen: '100vw'
             }),
-            transitionDuration      : {
+            transitionDuration: {
                 '400': '400ms'
             },
             transitionTimingFunction: {
                 'drawer': 'cubic-bezier(0.25, 0.8, 0.25, 1)'
             },
-
-            // @tailwindcss/typography
-            typography: ({theme}) => ({
+            typography: ({ theme }) => ({
                 DEFAULT: {
                     css: {
-                        color              : 'var(--fuse-text-default)',
-                        '[class~="lead"]'  : {
+                        color: 'var(--fuse-text-default)',
+                        '[class~="lead"]': {
                             color: 'var(--fuse-text-secondary)'
                         },
-                        a                  : {
+                        a: {
                             color: 'var(--fuse-primary-500)'
                         },
-                        strong             : {
+                        strong: {
                             color: 'var(--fuse-text-default)'
                         },
-                        'ol > li::before'  : {
+                        'ol > li::before': {
                             color: 'var(--fuse-text-secondary)'
                         },
-                        'ul > li::before'  : {
+                        'ul > li::before': {
                             backgroundColor: 'var(--fuse-text-hint)'
                         },
-                        hr                 : {
+                        hr: {
                             borderColor: 'var(--fuse-border)'
                         },
-                        blockquote         : {
-                            color          : 'var(--fuse-text-default)',
+                        blockquote: {
+                            color: 'var(--fuse-text-default)',
                             borderLeftColor: 'var(--fuse-border)'
                         },
-                        h1                 : {
+                        h1: {
                             color: 'var(--fuse-text-default)'
                         },
-                        h2                 : {
+                        h2: {
                             color: 'var(--fuse-text-default)'
                         },
-                        h3                 : {
+                        h3: {
                             color: 'var(--fuse-text-default)'
                         },
-                        h4                 : {
+                        h4: {
                             color: 'var(--fuse-text-default)'
                         },
                         'figure figcaption': {
                             color: 'var(--fuse-text-secondary)'
                         },
-                        code               : {
-                            color     : 'var(--fuse-text-default)',
+                        code: {
+                            color: 'var(--fuse-text-default)',
                             fontWeight: '500'
                         },
-                        'a code'           : {
+                        'a code': {
                             color: 'var(--fuse-primary)'
                         },
-                        pre                : {
-                            color          : theme('colors.white'),
+                        pre: {
+                            color: theme('colors.white'),
                             backgroundColor: theme('colors.gray.800')
                         },
-                        thead              : {
-                            color            : 'var(--fuse-text-default)',
+                        thead: {
+                            color: 'var(--fuse-text-default)',
                             borderBottomColor: 'var(--fuse-border)'
                         },
-                        'tbody tr'         : {
+                        'tbody tr': {
                             borderBottomColor: 'var(--fuse-border)'
-                        },
-                        'ol[type="A" s]'   : false,
-                        'ol[type="a" s]'   : false,
-                        'ol[type="I" s]'   : false,
-                        'ol[type="i" s]'   : false
-                    }
-                },
-                sm     : {
-                    css: {
-                        code : {
-                            fontSize: '1em'
-                        },
-                        pre  : {
-                            fontSize: '1em'
-                        },
-                        table: {
-                            fontSize: '1em'
                         }
                     }
                 }
@@ -279,15 +259,14 @@ const config = {
         placeholderOpacity: false,
         verticalAlign     : false
     },
-    plugins    : [
-
+    plugins: [
         // Fuse - Tailwind plugins
-        require(path.resolve(__dirname, ('src/@fuse/tailwind/plugins/utilities'))),
-        require(path.resolve(__dirname, ('src/@fuse/tailwind/plugins/icon-size'))),
-        require(path.resolve(__dirname, ('src/@fuse/tailwind/plugins/theming')))({themes}),
+        require(path.resolve(__dirname, 'src/@fuse/tailwind/plugins/utilities')),
+        require(path.resolve(__dirname, 'src/@fuse/tailwind/plugins/icon-size')),
+        require(path.resolve(__dirname, 'src/@fuse/tailwind/plugins/theming'))({ themes }),
 
-        // Other third party and/or custom plugins
-        require('@tailwindcss/typography')({modifiers: ['sm', 'lg']})
+        // Other third-party and/or custom plugins
+        require('@tailwindcss/typography')({ modifiers: ['sm', 'lg'] })
     ]
 };
 

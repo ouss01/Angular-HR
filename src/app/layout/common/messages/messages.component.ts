@@ -5,7 +5,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from 'app/core/auth/auth.service';
 import { MessagesService } from 'app/layout/common/messages/messages.service';
 import { Message } from 'app/layout/common/messages/messages.types';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,7 +24,7 @@ export class MessagesComponent implements OnInit, OnDestroy
 {
     @ViewChild('messagesOrigin') private _messagesOrigin: MatButton;
     @ViewChild('messagesPanel') private _messagesPanel: TemplateRef<any>;
-
+    @ViewChild('profileSection')   private profilePanel: TemplateRef<any>;
     messages: Message[];
     unreadCount: number = 0;
     private _overlayRef: OverlayRef;
@@ -36,6 +37,8 @@ export class MessagesComponent implements OnInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _messagesService: MessagesService,
         private _overlay: Overlay,
+        private _authService : AuthService , 
+        private router : Router  , 
         private _viewContainerRef: ViewContainerRef,
     )
     {
@@ -107,6 +110,27 @@ export class MessagesComponent implements OnInit, OnDestroy
         this._overlayRef.attach(new TemplatePortal(this._messagesPanel, this._viewContainerRef));
     }
 
+    signOut(){
+          this._authService.signOut()
+         this.router.navigateByUrl('sign-in')
+    }
+    openProfile(): void
+    {
+        // Return if the messages panel or its origin is not defined
+        if ( !this.profilePanel )
+        {
+            return;
+        }
+
+        // Create the overlay if it doesn't exist
+        if ( !this._overlayRef )
+        {
+            this._createOverlay();
+        }
+
+        // Attach the portal to the overlay
+        this._overlayRef.attach(new TemplatePortal(this.profilePanel, this._viewContainerRef));
+    }
     /**
      * Close the messages panel
      */

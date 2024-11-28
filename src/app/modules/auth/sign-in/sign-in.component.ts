@@ -89,7 +89,7 @@ export class AuthSignInComponent implements OnInit {
                     }
 
                     // Navigate to the redirect url
-                    this._router.navigate(['']);
+                    this._router.navigate(['/dashboards/organigram']);
                 },
                 (response) => {
                     // Re-enable the form

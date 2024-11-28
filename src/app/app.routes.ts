@@ -3,6 +3,8 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
+import { PromotionComponent } from './promotion/promotion.component';
+import { FinActivityComponent } from './fin-activity/fin-activity.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -87,14 +89,14 @@ export const appRoutes: Route[] = [
 
             // Dashboards
             {path: 'dashboards', children: [
-                {path: 'project', loadChildren: () => import('app/modules/admin/dashboards/project/project.routes')},
+                {path: 'organigram', loadChildren: () => import('app/modules/admin/dashboards/project/project.routes')},
 
-                {path: 'analytics', loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.routes')},
+                {path: 'employees', loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.routes')},
                 
-                {path: 'crypto', loadChildren: () => import('app/modules/admin/dashboards/crypto/crypto.routes')},
+                {path: 'employeesManagement', loadChildren: () => import('app/modules/admin/dashboards/crypto/crypto.routes')},
                 
                 
-                {path: 'finance', loadChildren: () => import('app/modules/admin/dashboards/finance/finance.routes')}
+                {path: 'onBoarding', loadChildren: () => import('app/modules/admin/dashboards/finance/finance.routes')}
             ]},
 
             // Apps
@@ -107,6 +109,9 @@ export const appRoutes: Route[] = [
                 {path: 'notes', loadChildren: () => import('app/modules/admin/apps/notes/notes.routes')},
                 {path: 'scrumboard', loadChildren: () => import('app/modules/admin/apps/scrumboard/scrumboard.routes')},
                 {path: 'tasks', loadChildren: () => import('app/modules/admin/apps/tasks/tasks.routes')},
+                {path: 'promotion', component:PromotionComponent},
+                {path:'fin-activity' , component:FinActivityComponent}
+
             ]},
 
             // Pages

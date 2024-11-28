@@ -1,0 +1,58 @@
+<mat-dialog-content>
+    <form [formGroup]="form">
+      <!-- Promoted Employee -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Employé</mat-label>
+        <input matInput formControlName="Employee" placeholder="Enter employee name" />
+      </mat-form-field>
+      <br />
+  
+      <!-- Department -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Départment</mat-label>
+        <input matInput formControlName="department" placeholder="Enter department" />
+      </mat-form-field>
+      <br />
+  
+      <!-- Promotion Designation From -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Raison De Fin De Contrat</mat-label>
+        <input matInput formControlName="RaisonFin" placeholder="Enter current designation" />
+      </mat-form-field>
+      <br />
+  
+      <!-- Promotion Designation To -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Type De Contrat</mat-label>
+        <input matInput formControlName="TypeContrat" placeholder="Enter new designation" />
+      </mat-form-field>
+      <br />
+  
+      <!-- Promotion Date -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Date Fin D'Activité/Retraite</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="DateFin"
+          placeholder="Select a date"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <!-- Cancel Button -->
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <!-- Submit Button -->
+    <button mat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid" cdkFocusInitial>
+      Submit
+    </button>
+  </mat-dialog-actions>
+  
+
+
+
+  
