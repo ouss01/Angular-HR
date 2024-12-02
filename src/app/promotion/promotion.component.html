@@ -1,32 +1,49 @@
 <div class="container">
+    <!-- Add Promotion Button -->
     <div class="d-flex flex-row-reverse mt-4">
-        <button mat-raised-button (click)="openAddModal()">Ajouter</button>
+      <button mat-raised-button color="primary" (click)="openAddModal()">Ajouter</button>
     </div>
+  
+    <!-- Responsive Table -->
     <table class="responsive-table">
-        <!-- Responsive Table Header Section -->
-        <thead class="responsive-table__head">
-            <tr class="responsive-table__row">
-                <th class="responsive-table__head__title responsive-table__head__title--name">Département</th>
-                <th class="responsive-table__head__title responsive-table__head__title--status">Employé Promu</th>
-                <th class="responsive-table__head__title responsive-table__head__title--types">Date de Promotion</th>
-                <th class="responsive-table__head__title responsive-table__head__title--update">Désignation Avant</th>
-                <th class="responsive-table__head__title responsive-table__head__title--country">Désignation Après</th>
-                <th class="responsive-table__head__title responsive-table__head__title--actions">Actions</th>
-            </tr>
-        </thead>
-        <!-- Responsive Table Body Section -->
-        <tbody class="responsive-table__body">
-            <tr class="responsive-table__row" *ngFor="let item of promotions">
-                <td>{{ item.department }}</td>
-                <td>{{ item.promotedEmployee }}</td>
-                <td>{{ item.promotionDate | date: 'dd-MM-yyyy' }}</td>
-                <td>{{ item.promotionFrom }}</td>
-                <td>{{ item.promotionTo }}</td>
-                <td>
-                    <button class="btn btn-success text-sm p-4">Accepter</button>
-                    <button class="btn btn-danger text-sm p-4">Refuser</button>
-                </td>
-            </tr>
-        </tbody>
+      <!-- Responsive Table Header Section -->
+      <thead class="responsive-table__head">
+        <tr class="responsive-table__row">
+          <th class="responsive-table__head__title responsive-table__head__title--name">Département</th>
+          <th class="responsive-table__head__title responsive-table__head__title--status">Employé Promu</th>
+          <th class="responsive-table__head__title responsive-table__head__title--types">Date de Promotion</th>
+          <th class="responsive-table__head__title responsive-table__head__title--update">Désignation Avant</th>
+          <th class="responsive-table__head__title responsive-table__head__title--country">Désignation Après</th>
+          <th class="responsive-table__head__title responsive-table__head__title--actions">Actions</th>
+        </tr>
+      </thead>
+  
+      <!-- Responsive Table Body Section -->
+      <tbody class="responsive-table__body">
+        <tr class="responsive-table__row" *ngFor="let item of promotions">
+          <td>{{ item.department }}</td>
+          <td>{{ item.promotedEmployee }}</td>
+          <td>{{ item.promotionDate | date: 'dd-MM-yyyy' }}</td>
+          <td>{{ item.promotionFrom }}</td>
+          <td>{{ item.promotionTo }}</td>
+          <td>
+            <!-- Accepter Button -->
+            <button
+              class="btn btn-success text-sm p-2"
+              (click)="handleAccept(item)"
+            >
+              Accepter
+            </button>
+            <!-- Refuser Button -->
+            <button
+              class="btn btn-danger text-sm p-2"
+              (click)="handleRefuse(item)"
+            >
+              Refuser
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+  </div>
+  

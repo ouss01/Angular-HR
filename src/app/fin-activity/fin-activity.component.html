@@ -1,32 +1,43 @@
 <div class="container">
     <div class="d-flex flex-row-reverse mt-4">
-        <button mat-raised-button (click)="openAddModal()">Ajouter</button>
+      <button mat-raised-button color="primary" (click)="openAddModal()">Ajouter</button>
     </div>
+  
     <table class="responsive-table">
-        <!-- Responsive Table Header Section -->
-        <thead class="responsive-table__head">
-            <tr class="responsive-table__row">
-                <th class="responsive-table__head__title responsive-table__head__title--name">Département</th>
-                <th class="responsive-table__head__title responsive-table__head__title--status">Employé</th>
-                <th class="responsive-table__head__title responsive-table__head__title--types">Date Fin D'Activité/Retraite</th>
-                <th class="responsive-table__head__title responsive-table__head__title--update">Type De Contrat</th>
-                <th class="responsive-table__head__title responsive-table__head__title--country">Raison De Fin De Contrat</th>
-                <th class="responsive-table__head__title responsive-table__head__title--actions">Actions</th>
-            </tr>
-        </thead>
-        <!-- Responsive Table Body Section -->
-        <tbody class="responsive-table__body">
-            <tr class="responsive-table__row" *ngFor="let item of promotions">
-                <td>{{ item.department }}</td>
-                <td>{{ item.Employee }}</td>
-                <td>{{ item.DateFin | date: 'dd-MM-yyyy' }}</td>
-                <td>{{ item.TypeContrat }}</td>
-                <td>{{ item.RaisonFin }}</td>
-                <td>
-                    <button class="btn btn-success text-sm p-4">Accepter</button>
-                    <button class="btn btn-danger text-sm p-4">Refuser</button>
-                </td>
-            </tr>
-        </tbody>
+      <thead class="responsive-table__head">
+        <tr class="responsive-table__row">
+          <th class="responsive-table__head__title responsive-table__head__title--name">Département</th>
+          <th class="responsive-table__head__title responsive-table__head__title--status">Employé</th>
+          <th class="responsive-table__head__title responsive-table__head__title--types">Date Fin D'Activité</th>
+          <th class="responsive-table__head__title responsive-table__head__title--update">Type De Contrat</th>
+          <th class="responsive-table__head__title responsive-table__head__title--country">Raison De Fin D'Activité</th>
+          <th class="responsive-table__head__title responsive-table__head__title--actions">Actions</th>
+        </tr>
+      </thead>
+  
+      <tbody class="responsive-table__body">
+        <tr class="responsive-table__row" *ngFor="let item of finactivity">
+          <td>{{ item.department }}</td>
+          <td>{{ item.Employee }}</td>
+          <td>{{ item.DateFin | date: 'dd-MM-yyyy' }}</td>
+          <td>{{ item.TypeContrat }}</td>
+          <td>{{ item.RaisonFin }}</td>
+          <td>
+            <button
+            class="btn btn-success text-sm p-2"
+            (click)="handleAccept(item)"
+          >
+            Accepter
+          </button>
+          <button
+          class="btn btn-danger text-sm p-2"
+          (click)="handleRefuse(item)"
+        >
+          Refuser
+        </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+  </div>
+  

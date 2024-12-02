@@ -238,8 +238,9 @@ input#input-filee+label :hover{
   </mat-form-field>
       <div class="button-container">
         <button mat-raised-button color="primary" type="submit" (click)="submitForm()">Ajouté Employé</button>
-        <button mat-raised-button color="primary" type="update" >Mettre à Jour Employé</button>
-        <button mat-raised-button color="primary" type="delete" >Supprimer Employé</button>
+        <button mat-raised-button color="primary" type="button" (click)="updateEmployee()">Mettre à Jour Employé</button>
+        <button mat-raised-button color="warn" (click)="deleteEmployee()">Supprimer Employé</button>
+
       </div>
     </form>
     

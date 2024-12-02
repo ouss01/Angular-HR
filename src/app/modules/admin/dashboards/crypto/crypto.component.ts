@@ -42,6 +42,7 @@ export class CryptoComponent implements OnInit, OnDestroy
     photo:any
     cv: any;
     filenamee='None';
+    employee:any;
     /**
      * Constructor
      */
@@ -223,7 +224,63 @@ export class CryptoComponent implements OnInit, OnDestroy
                     // Handle form validation errors
                 }
             }
-            
+            updateEmployee(): void {
+                const employeeId = this.employeeForm.get('employeeID')?.value; // Ensure you have the employee ID in the form
+                if (employeeId) {
+                  const updatedData = this.employeeForm.value; // Get the updated form data
+                  
+                  // Log the data to the console for inspection
+                  console.log('Updated Data:', updatedData);
+              
+                  this.employeeservice.updateEmployee(employeeId, updatedData).subscribe(
+                    (response) => {
+                      console.log('Employee updated successfully:', response);
+                      Swal.fire('Employee updated successfully!');
+                      this.employeeForm.reset(); // Reset the form after successful update
+                    },
+                    (error) => {
+                      console.error('Error updating employee:', error);
+                      Swal.fire('Error updating employee!');
+                    }
+                  );
+                } else {
+                  Swal.fire('Please provide a valid employee ID');
+                }
+              }
+
+              deleteEmployee(): void {
+                const employeeId = this.employeeForm.get('employeeID')?.value;
+              
+                if (employeeId) {
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You won\'t be able to revert this!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      this.employeeservice.deleteEmployee(employeeId).subscribe(
+                        (response) => {
+                          console.log('Employee deleted successfully:', response);
+                          Swal.fire('Deleted!', 'The employee has been deleted.', 'success');
+                          this.employeeForm.reset();
+                        },
+                        (error) => {
+                          console.error('Error deleting employee:', error);
+                          Swal.fire('Error', `There was an issue deleting the employee: ${error.message}`, 'error');
+                        }
+                      );
+                    }
+                  });
+                } else {
+                  Swal.fire('Error', 'Please provide a valid employee ID to delete.', 'error');
+                }
+              }
+              
+              
+              
     
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------

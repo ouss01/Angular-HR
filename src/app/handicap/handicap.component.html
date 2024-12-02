@@ -1,0 +1,131 @@
+<div class="container">
+    <!-- Add button for adding accommodations -->
+    <div class="d-flex flex-row-reverse mt-4">
+      <button mat-raised-button color="primary" (click)="openAddModal()" aria-label="Ajouter un aménagement">
+        Ajouter
+      </button>
+    </div>
+  
+    <!-- Accessible and Responsive Table -->
+    <table class="responsive-table" aria-label="Liste des employés avec handicap">
+      <thead class="responsive-table__head">
+        <tr class="responsive-table__row">
+          <th class="responsive-table__head__title responsive-table__head__title--name">Département</th>
+          <th class="responsive-table__head__title responsive-table__head__title--status">Employé</th>
+          <th class="responsive-table__head__title responsive-table__head__title--status">État d'Aménagement</th>
+          <th class="responsive-table__head__title responsive-table__head__title--types">Date d'Évaluation</th>
+          <th class="responsive-table__head__title responsive-table__head__title--update">Type de Handicap</th>
+          <th class="responsive-table__head__title responsive-table__head__title--country">Aménagement</th>
+          <th class="responsive-table__head__title responsive-table__head__title--actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="responsive-table__body">
+        <tr class="responsive-table__row" *ngFor="let item of employees">
+          <td>{{ item.department }}</td>
+          <td>{{ item.Employee }}</td>
+          <td>{{ item.amenagementState }}</td>
+          <td>{{ item.evaluationDate | date: 'dd-MM-yyyy' }}</td>
+          <td>
+            <span matTooltip="{{ item.handicapType }}" aria-label="Type de handicap">{{ item.handicapType }}</span>
+          </td>
+          <td>{{ item.amenagementType }}</td>
+          <td>
+            <!-- Action Buttons with ARIA labels for better accessibility -->
+            <button mat-button class="btn btn-success" (click)="acceptAccommodation(item)" aria-label="Accepter l'aménagement de {{ item.Employee }}">
+              Accepter
+            </button>
+            <button mat-button class="btn btn-danger" (click)="rejectAccommodation(item)" aria-label="Refuser l'aménagement de {{ item.Employee }}">
+              Refuser
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Help Section for Accessibility Features -->
+    <div class="help-section mt-4">
+      <h3>Améliorer la vie des travailleurs handicapés</h3>
+      <p>Voici quelques initiatives pour rendre le lieu de travail plus accessible :</p>
+      <ul>
+        <li>Utilisation de logiciels adaptés pour les malvoyants</li>
+        <li>Aménagements pour la mobilité réduite, comme des rampes d'accès</li>
+        <li>Formation et sensibilisation à la gestion des handicaps au travail</li>
+        <li>Réduction des barrières architecturales dans l'espace de travail</li>
+        <li>Temps de pause ajusté pour les employés en situation de handicap</li>
+      </ul>
+    </div>
+  
+    <!-- Feedback Section for Employee Suggestions and Ratings -->
+    <div class="feedback-section mt-4">
+        <h3>Suggestions pour améliorer la vie des travailleurs handicapés</h3>
+      
+        <!-- Use ngForm to bind the feedback form -->
+        <form (ngSubmit)="submitFeedback()" #feedbackForm="ngForm">
+          <div class="form-group">
+            <label for="suggestion">Votre suggestion</label>
+            <textarea
+              id="suggestion"
+              name="suggestion"
+              class="form-control"
+              rows="3"
+              placeholder="Comment pouvons-nous améliorer la vie des travailleurs handicapés?"
+              [(ngModel)]="feedback.suggestion"
+              required
+              #suggestion="ngModel"
+            ></textarea>
+            <div *ngIf="suggestion.invalid && suggestion.touched" class="error-text">
+              La suggestion est requise.
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label for="rating" class="text-black">Évaluation des services pour travailleurs handicapés</label>
+            <select id="rating" name="rating" class="block w-full mt-2 p-2 border border-gray-300 rounded text-black" [(ngModel)]="feedback.rating" required>
+              <option value="1" class="text-black">1 - Très insatisfait</option>
+              <option value="2" class="text-black">2 - Insatisfait</option>
+              <option value="3" class="text-black">3 - Moyenne</option>
+              <option value="4" class="text-black">4 - Satisfait</option>
+              <option value="5" class="text-black">5 - Très satisfait</option>
+            </select>
+          </div>
+          
+      
+          <div class="form-group">
+            <label for="additionalComments">Commentaires supplémentaires</label>
+            <textarea
+              id="additionalComments"
+              name="additionalComments"
+              class="form-control"
+              rows="3"
+              placeholder="Ajoutez des commentaires supplémentaires si nécessaire."
+              [(ngModel)]="feedback.additionalComments"
+            ></textarea>
+          </div>
+      
+          <button type="submit" class="btn btn-primary" [disabled]="feedbackForm.invalid">
+            Envoyer vos suggestions
+          </button>
+        </form>
+      </div>
+  
+    <!-- Budget Section to Track FIPHFP Funds -->
+    <div class="budget-tracking mt-4">
+      <h3>Suivi du Budget FIPHFP</h3>
+      <p><strong>Budget Utilisé:</strong> {{ usedBudget }} €</p>
+      <p><strong>Budget Total:</strong> {{ totalBudget }} €</p>
+      <p><strong>Budget Restant:</strong> {{ totalBudget - usedBudget }} €</p>
+    </div>
+  
+    <!-- Process and Tool Requirements Section -->
+    <div class="process-section mt-4">
+      <h3>Gestion du Handicap et Maintien dans l’Emploi</h3>
+      <p>
+        Le département du Var gère plusieurs processus relatifs à l'intégration des travailleurs handicapés. Ces processus comprennent la gestion des agents reconnus travailleurs handicapés, les aménagements de postes, et la gestion du budget FIPHFP.
+      </p>
+    </div>
+  
+    <!-- SweetAlert2 script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </div>
+  
+  

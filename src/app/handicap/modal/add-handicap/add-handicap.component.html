@@ -1,0 +1,61 @@
+<mat-dialog-content>
+    <form [formGroup]="form">
+      <!-- Employee -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Employé</mat-label>
+        <input matInput formControlName="employee" placeholder="Enter employee name" />
+        <mat-error *ngIf="form.controls['employee'].hasError('required')">
+          Employé is required
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Department -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Départment</mat-label>
+        <input matInput formControlName="department" placeholder="Enter department" />
+        <mat-error *ngIf="form.controls['department'].hasError('required')">
+          Department is required
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Aménagement State -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>État de l'Aménagement</mat-label>
+        <input matInput formControlName="aménagementState" placeholder="Enter current aménagement state" />
+        <mat-error *ngIf="form.controls['aménagementState'].hasError('required')">
+          Aménagement state is required
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Aménagement Type -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Type d'Aménagement</mat-label>
+        <input matInput formControlName="aménagementType" placeholder="Enter new aménagement type" />
+        <mat-error *ngIf="form.controls['aménagementType'].hasError('required')">
+          Aménagement type is required
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Evaluation Date -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Date d'Évaluation</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="evaluationDate" placeholder="Select a date" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.controls['evaluationDate'].hasError('required')">
+          Evaluation date is required
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <!-- Cancel Button -->
+    <button mat-button (click)="onNoClick()">Annuler</button>
+  
+    <!-- Submit Button -->
+    <button mat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid" cdkFocusInitial>
+      Soumettre
+    </button>
+  </mat-dialog-actions>
+  

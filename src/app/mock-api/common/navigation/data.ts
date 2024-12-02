@@ -4,7 +4,7 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id      : 'dashboards',
-        title   : 'Gestion Administratives et Carrières',
+        title   : 'Gestion Administratives et Gestion Des Carrières',
         subtitle: '',
         type    : 'group',
         icon    : 'heroicons_outline:home',
@@ -69,6 +69,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         type : 'basic',
                         icon : 'heroicons_outline:user-group',
                         link : '/apps/fin-activity',
+                       
+                    },
+                    {
+                        id   : 'apps.Ajout Des Employées',
+                        title:  ' Gestion des Handicapés ',
+                        type : 'basic',
+                        icon : 'heroicons_outline:user-group',
+                        link : '/apps/handicap',
                        
                     },
                 ]

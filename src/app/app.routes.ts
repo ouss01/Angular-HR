@@ -5,6 +5,7 @@ import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { PromotionComponent } from './promotion/promotion.component';
 import { FinActivityComponent } from './fin-activity/fin-activity.component';
+import { HandicapComponent } from './handicap/handicap.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -110,7 +111,8 @@ export const appRoutes: Route[] = [
                 {path: 'scrumboard', loadChildren: () => import('app/modules/admin/apps/scrumboard/scrumboard.routes')},
                 {path: 'tasks', loadChildren: () => import('app/modules/admin/apps/tasks/tasks.routes')},
                 {path: 'promotion', component:PromotionComponent},
-                {path:'fin-activity' , component:FinActivityComponent}
+                {path:'fin-activity' , component:FinActivityComponent},
+                {path:'handicap' , component:HandicapComponent}
 
             ]},
 

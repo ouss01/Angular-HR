@@ -1,0 +1,414 @@
+/* SCSS Variables for Enhanced Colors */
+$bg-color: #f7f9fc; /* Soft background */
+$primary-color: #0066ff; /* Primary blue color */
+$active-color: #25be64; /* Active color */
+$inactive-color: #dadde4; /* Disabled color */
+$new-color: #febf02; /* New status color */
+$text-color: #2f3a56; /* Darker text for readability */
+$light-text-color: #7d8b9e; /* Lighter text for secondary content */
+$table-bg-color: #ffffff; /* Table background */
+$table-head-bg-color: #f1f4fb; /* Light table header background */
+$table-border-color: #e5eaf0; /* Light border */
+$hover-bg-color: #0066ff; /* Hover background for rows */
+$hover-text-color: #ffffff; /* Hover text color */
+
+/* Responsive Breakpoint SCSS Mixin */
+@mixin mobile-xxs {
+	@media (max-width: 400px) {
+		@content;
+	}
+}
+@mixin min-tablet {
+	@media (min-width: 768px) {
+		@content;
+	}
+}
+@mixin desktop {
+	@media (max-width: 991px) {
+		@content;
+	}
+}
+@mixin tablet-to-desktop {
+	@media (min-width: 768px) and (max-width: 991px) {
+		@content;
+	}
+}
+
+/* Import Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* Reset and General Style */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 2px;
+}
+
+body {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 100vh;
+	font-family: "Poppins", sans-serif;
+	color: $text-color;
+	background-color: $bg-color;
+	font-size: 1rem;
+	padding: 2rem;
+}
+
+/* Page Wrapper */
+.container {
+	width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+/* Add Button Styling */
+.btn-add {
+	padding: 1rem 2rem;
+	background-color: $primary-color;
+	color: #fff;
+	border: none;
+	border-radius: 30px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	font-size: 1rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 60;
+
+	&:hover {
+		background-color: darken($primary-color, 10%);
+	}
+}
+
+/* Responsive Table */
+.responsive-table {
+	background-color: $table-bg-color;
+	border-radius: 5px;
+	box-shadow: 0 4px 15px rgba(5, 5, 5, 0.998);
+	width: 100%;
+	margin-top: 2rem;
+	overflow: hidden;
+	border: 1px solid $table-border-color;
+	@include min-tablet {
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+	}
+
+	&__row {
+		display: grid;
+		border-bottom: 1px solid $table-border-color;
+		padding: 1rem;
+		@include min-tablet {
+			grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		}
+		@include tablet-to-desktop {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+
+		th,
+		td {
+			padding: 0.8rem;
+			font-size: 1rem;
+			color: $text-color;
+			font-weight: 600;
+		}
+	}
+
+	&__head {
+		background-color: $table-head-bg-color;
+		@include desktop {
+			display: none;
+		}
+
+		&__title {
+			display: flex;
+			align-items: center;
+			font-weight: 500;
+			color: $text-color;
+			text-transform: capitalize;
+			font-size: 1.6rem;
+		}
+	}
+
+	&__body {
+		.responsive-table__row {
+			transition: 0.2s ease;
+			transition-property: color, background;
+			&:last-child {
+				border-bottom: none;
+			}
+
+			&:hover {
+				color: $hover-text-color;
+				background-color: $hover-bg-color;
+				cursor: pointer;
+			}
+		}
+
+		&__text {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			font-size: 1.4rem;
+			&::before {
+				margin-right: 1rem;
+				font-weight: 600;
+				color: $light-text-color;
+			}
+			@include desktop {
+				&::before {
+					content: attr(data-title) " :";
+				}
+			}
+			@include mobile-xxs {
+				&::before {
+					width: 100%;
+					margin-bottom: 1rem;
+				}
+			}
+		}
+	}
+}
+
+/* Buttons in Table */
+.btn {
+	padding: 0.5rem 1.2rem;
+	border-radius: 30px;
+	border: none;
+	font-size: 1.4rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+
+	&-success {
+		background-color: #28a745;
+		color: #fff;
+
+		&:hover {
+			background-color: darken(#28a745, 5%);
+		}
+	}
+
+	&-danger {
+		background-color: #dc3545;
+		color: #fff;
+
+		&:hover {
+			background-color: darken(#dc3545, 5%);
+		}
+	}
+}
+
+/* Help Section Styles */
+.help-section {
+	margin-top: 4rem;
+	background-color: #f5f7fa;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 15px rgba(5, 5, 5, 0.998);
+
+	h3 {
+		font-size: 2rem;
+		font-weight: 600;
+		color: $text-color;
+		margin-bottom: 1.5rem;
+	}
+
+	ul {
+		list-style-type: disc;
+		margin-left: 2rem;
+
+		li {
+			font-size: 1.4rem;
+			color: $text-color;
+			margin-bottom: 1rem;
+		}
+	}
+}
+
+/* Budget Section Styles */
+.budget-tracking {
+	background-color: #f9fbfd;
+	padding: 1.5rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 15px rgba(5, 5, 5, 0.998);
+
+	h3 {
+		font-size: 2rem;
+		font-weight: 600;
+		color: $text-color;
+		margin-bottom: 1.5rem;
+	}
+
+	p {
+		font-size: 1.4rem;
+		color: $light-text-color;
+
+		strong {
+			color: $text-color;
+		}
+	}
+}
+
+/* Process Section Styles */
+.process-section {
+  margin-top: 4rem;
+  background-color: #f5f7fa;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(5, 5, 5, 0.998);
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: $light-text-color;
+    margin-bottom: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $text-color;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+    font-size: 1.2rem;
+    color: $light-text-color;
+
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+/* Feedback Section */
+.feedback-section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 15px rgba(5, 5, 5, 0.998);
+  margin-top: 4rem;
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 1.5rem;
+  }
+
+  form {
+    .form-group {
+      margin-bottom: 2rem;
+      
+      label {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: $text-color;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      textarea,
+      select {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.4rem;
+        border: 1px solid $table-border-color;
+        border-radius: 8px;
+        box-sizing: border-box;
+        color: $text-color;
+
+        &:focus {
+          border-color: $primary-color;
+          outline: none;
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+		color: $text-color;
+      }
+
+      select {
+        appearance: $text-color;	
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 4l3 3 3-3z'%3E%3C/path%3E%3C/svg%3E") no-repeat scroll right 0.8rem center;
+        background-size: 0.8rem;
+      }
+    }
+
+    button {
+      background-color: $primary-color;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+/* Modal Add Button */
+.btn-add {
+    background-color: $new-color;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.5rem 1rem; /* Reduced padding */
+    font-size: 1rem; /* Smaller font size */
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: darken($new-color, 10%);
+    }
+  }
+
+/* Form Responsive Styles for Small Devices */
+@include mobile-xxs {
+  .form-group {
+    label {
+      font-size: 1.2rem;
+    }
+    textarea,
+    select {
+      font-size: 1.2rem;
+    }
+  }
+
+  .btn-add,
+  .btn {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+
+  .responsive-table {
+    .responsive-table__row {
+      grid-template-columns: 1fr;
+      padding: 0.8rem;
+    }
+  }
+}

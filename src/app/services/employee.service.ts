@@ -23,5 +23,11 @@ export class EmployeeService {
   currentuser(){
     return this.httpclient.get(this.url+'/current_user/')
   }
+  deleteEmployee(employeeId: string) {
+    return this.httpclient.delete(`${this.url}/employees/${employeeId}/`);
+  }
 
+  updateEmployee(employeeId: string, employeeData: any) {
+    return this.httpclient.put(`${this.url}/employees/${employeeId}/`, employeeData);
+  }
 }
