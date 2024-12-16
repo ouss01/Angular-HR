@@ -1,0 +1,55 @@
+<div class="form-container">
+    <div class="form-header">
+      <h2>Nouveau Poste</h2>
+      <p>Saisir les informations du nouveau poste.</p>
+    </div>
+  
+    <form class="form">
+      <!-- Informations Générales -->
+      <h2>Informations Générales</h2>
+      <mat-form-field class="full-width">
+        <mat-label>Titre du Poste *</mat-label>
+        <input matInput type="text" [(ngModel)]="title" name="title" placeholder="Entrer le titre du poste" required />
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="description" name="description" placeholder="Entrer la description"></textarea>
+      </mat-form-field>
+  
+      <!-- Droits -->
+      <h2>Droits</h2>
+      <div class="checkbox-group">
+        <mat-checkbox>Droit IFSE</mat-checkbox>
+        <mat-checkbox>Droit NBI</mat-checkbox>
+        <mat-checkbox>Droit CIA</mat-checkbox>
+        <mat-checkbox>Droit ZUS</mat-checkbox>
+        <mat-checkbox>Base IFSE</mat-checkbox>
+      </div>
+  
+      <!-- Assignations -->
+      <h2>Assignations</h2>
+      <div class="form-row">
+        <mat-form-field class="half-width">
+          <mat-label>Employé Assigné *</mat-label>
+          <mat-select [(ngModel)]="assignedEmployee" name="assignedEmployee" required>
+            <mat-option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="half-width">
+          <mat-label>Logement</mat-label>
+          <mat-select [(ngModel)]="housing" name="housing">
+            <mat-option value="oui">Oui</mat-option>
+            <mat-option value="non">Non</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button mat-raised-button color="primary"  (click)="onSubmit()">Soumettre</button>
+      </div>
+    </form>
+  </div>
+  

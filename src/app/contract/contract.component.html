@@ -1,0 +1,68 @@
+<div class="form-container">
+    <div class="form-header">
+      <h2>Nouveau Contrat</h2>
+      <p>Renseignez les informations nécessaires pour le nouveau contrat.</p>
+    </div>
+  
+    <mat-tab-group>
+      <mat-tab label="Informations générales">
+        <form class="contract-form">
+          <!-- Titre du Contrat -->
+          <mat-form-field class="full-width">
+            <mat-label>Titre du Contrat*</mat-label>
+            <input matInput placeholder="Titre du Contrat" required />
+          </mat-form-field>
+  
+          <!-- Type de Contrat -->
+          <div class="contract-type">
+            <h4>Type de Contrat</h4>
+            <div class="contract-options">
+              <div>
+                <h5>Classique</h5>
+                <mat-radio-group>
+                  <mat-radio-button value="CDI">CDI</mat-radio-button>
+                  <mat-radio-button value="CDD">CDD</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div>
+                <h5>Spécifique</h5>
+                <mat-radio-group>
+                  <mat-radio-button value="Stage">Stage</mat-radio-button>
+                  <mat-radio-button value="Apprentissage">Apprentissage</mat-radio-button>
+                  <mat-radio-button value="Alternance">Alternance</mat-radio-button>
+                  <mat-radio-button value="Urgent">Urgent</mat-radio-button>
+                  <mat-radio-button value="Free-lance">Free-lance</mat-radio-button>
+                  <mat-radio-button value="Interim">Interim</mat-radio-button>
+                  <mat-radio-button value="Saisonnier">Saisonnier</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Description -->
+          <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Insérer du texte ici ..."></textarea>
+          </mat-form-field>
+  
+          <!-- Durée et Date de début -->
+          <div class="form-row">
+            <mat-form-field>
+              <mat-label>Durée (en années)</mat-label>
+              <input matInput type="number" placeholder="0" />
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Date de début*</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-tab>
+      
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Soumettre</button>
+</div>
+  

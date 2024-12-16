@@ -36,15 +36,15 @@ export class HandicapComponent {
   employees = [
     {
       department: 'Finance',
-      Employee: 'Oussema Trimech',
-      handicapType: 'Auditif',
-      amenagementType: 'Système d’assistance audio',
+      employee: 'Oussema Trimech',
+      handicapType: 'auditif',
+      amenagementType: 'système d’assistance audio',
       amenagementState: 'Actif',
       evaluationDate: new Date(2024, 8, 20), // Sep 20, 2024
     },
     {
-      department: 'Engineering',
-      Employee: 'Yassin TR',
+      department: 'engineering',
+      employee: 'Yassin TR',
       handicapType: 'Trouble de la vue',
       amenagementType: 'Écran adapté',
       amenagementState: 'Actif',
@@ -52,7 +52,7 @@ export class HandicapComponent {
     },
     {
       department: 'Marketing',
-      Employee: 'Firas SK',
+      employee: 'Firas SK',
       handicapType: 'Mobilité réduite',
       amenagementType: 'Accès facilité',
       amenagementState: 'Inactif',
@@ -60,7 +60,7 @@ export class HandicapComponent {
     },
     {
       department: 'Sales',
-      Employee: 'Amine TR',
+      employee: 'Amine TR',
       handicapType: 'Auditif',
       amenagementType: 'Casque audio adapté',
       amenagementState: 'Actif',
@@ -157,14 +157,7 @@ export class HandicapComponent {
     });
   }
 
-  // Function to remove accommodation
-  removeAccommodation(item: any): void {
-    const index = this.employees.indexOf(item);
-    if (index > -1) {
-      this.employees.splice(index, 1);
-      console.log('Accommodation removed:', item.Employee);
-    }
-  }
+ 
 
   // Handle form submission
   submitFeedback(): void {

@@ -45,6 +45,7 @@ export class EmployeeService {
   addHandicaps(data: any): Observable<any> {
     return this.httpclient.post(`${this.url}/handicaps/`, data);
   }
+  
   getFinactivity(): Observable<any> {
     return this.httpclient.get(`${this.url}/finactivities/`);
   }

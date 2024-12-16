@@ -1,12 +1,21 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { AddFinActivityComponent } from './modal/add-fin-activity/add-fin-activity.component';
 import Swal from 'sweetalert2';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-fin-activity',
@@ -21,20 +30,20 @@ import Swal from 'sweetalert2';
   ],
   templateUrl: './fin-activity.component.html',
   styleUrls: ['./fin-activity.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+ 
 })
 export class FinActivityComponent {
   finactivity = [
     {
       department: 'HR',
-      Employee: 'John Doe',
+      Employee: 'Amine TR',
       DateFin: new Date(2024, 10, 25), // November 25, 2024
       TypeContrat: 'CDI',
       RaisonFin: 'Retraite',
     },
     {
       department: 'IT',
-      Employee: 'Ouss Smith',
+      Employee: 'Oussema sakly',
       DateFin: new Date(2024, 9, 15), // October 15, 2024
       TypeContrat: 'CDD',
       RaisonFin: 'Fin Contrat',
@@ -75,11 +84,6 @@ export class FinActivityComponent {
     });
   }
 
-  // Method to add a new promotion (fin activity)
-  private addFinActivity(newFinActivity: any): void {
-    this.finactivity.push(newFinActivity);
-  }
-
   handleAccept(finactivity: any) {
     Swal.fire({
       title: 'Êtes-vous sûr ?',
@@ -93,7 +97,7 @@ export class FinActivityComponent {
       if (result.isConfirmed) {
         Swal.fire(
           'Acceptée!',
-          `La promotion pour ${finactivity.Employee} a été acceptée.`,
+          `La fin d\'activité pour ${finactivity.Employee} a été acceptée.`,
           'success'
         );
       }
@@ -103,7 +107,7 @@ export class FinActivityComponent {
   handleRefuse(finactivity: any) {
     Swal.fire({
       title: 'Êtes-vous sûr ?',
-      text: `Voulez-vous refuser la Fin d'Activité pour ${finactivity.Employee} ?`,
+      text: `Voulez-vous refuser la Fin d\'Activité pour ${finactivity.Employee} ?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33', // Red for Refuse
@@ -113,11 +117,10 @@ export class FinActivityComponent {
       if (result.isConfirmed) {
         Swal.fire(
           'Refusée!',
-          `La promotion pour ${finactivity.Employee} a été refusée.`,
+          `La fin d\'activité pour ${finactivity.Employee} a été refusée.`,
           'info'
         );
       }
     });
   }
-
 }

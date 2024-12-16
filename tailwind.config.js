@@ -66,7 +66,7 @@ const themes = {
 const config = {
     darkMode: 'class', // Enable dark mode
     content: [
-        './src/**/*.{html,css,ts}', // Ensure the content paths match your actual project structure
+        './src/**/*.{html,  css,ts}', // Ensure the content paths match your actual project structure
         './src/app/**/*.{html,css,ts}' // Added to catch files under app directory
     ],
     important: true, // Apply the `!important` flag to all Tailwind CSS classes

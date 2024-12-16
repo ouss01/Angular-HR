@@ -82,6 +82,33 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 ]
                 
             },
+
+            {
+                id   : 'dashboards.Gestion des Postes',
+                title: 'Gestion des Postes',
+                type : 'collapsable',
+                icon : 'heroicons_outline:briefcase',
+                 link : 'apps/contacts',
+                children: [
+            
+                    {
+                        id   : 'apps.poste',
+                        title: 'Postes',
+                        type : 'basic',
+                        icon : 'heroicons_outline:arrow-up-circle',
+                        link : '/apps/poste',
+                    },  
+                    {
+                        id   : 'apps.contract',
+                        title: 'Contrats',
+                        type : 'basic',
+                        icon : 'heroicons_outline:arrow-up-circle',
+                        link : '/apps/contract',
+                    },           
+                   
+                ]
+                
+            },
         ],
     },
    

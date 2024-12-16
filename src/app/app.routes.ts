@@ -6,7 +6,8 @@ import { LayoutComponent } from 'app/layout/layout.component';
 import { PromotionComponent } from './promotion/promotion.component';
 import { FinActivityComponent } from './fin-activity/fin-activity.component';
 import { HandicapComponent } from './handicap/handicap.component';
-
+import { PosteComponent } from './poste/poste.component';
+import { ContractComponent } from './contract/contract.component';
 // @formatter:off
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -112,7 +113,9 @@ export const appRoutes: Route[] = [
                 {path: 'tasks', loadChildren: () => import('app/modules/admin/apps/tasks/tasks.routes')},
                 {path: 'promotion', component:PromotionComponent},
                 {path:'fin-activity' , component:FinActivityComponent},
-                {path:'handicap' , component:HandicapComponent}
+                {path:'handicap' , component:HandicapComponent},
+                {path:'poste' , component:PosteComponent},
+                {path:'contract' , component:ContractComponent}
 
             ]},
 

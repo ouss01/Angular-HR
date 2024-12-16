@@ -36,9 +36,9 @@ export class AddHandicapComponent {
       employee: [''], // camelCase for variable name
       department: [''],
       handicapType: [''], // Adjusted to camelCase
-      aménagementType: [''], // Adjusted to camelCase
+      amenagementType: [''], // Adjusted to camelCase
       evaluationDate: [''], // Adjusted to camelCase
-      aménagementState: [''], // Adjusted to camelCase
+      amenagementState: [''], // Adjusted to camelCase
     });
   }
 
@@ -46,8 +46,8 @@ export class AddHandicapComponent {
   onSubmit(): void {
     if (this.form.valid) {
       const formData = this.form.value;
-      console.log('Form Data:', formData); // Handle the data as needed (e.g., service call)
-      this.dialogRef.close(formData); // Close the dialog and send form data back
+      console.log('Form Data:', formData); // Replace this with your service call to save the data
+      this.dialogRef.close(formData); // Pass data back to the parent component
     } else {
       console.log('Form is invalid');
     }

@@ -35,4 +35,8 @@ export class PosteService {
   deletePoste(posteId: number): Observable<any> {
     return this.httpClient.delete(this.url + `/postes/${posteId}/`);
   }
+
+  updateEmployee(employeeId: string, employeeData: any) {
+    return this.httpClient.put(`${this.url}/employees/${employeeId}/`, employeeData);
+  }
 }

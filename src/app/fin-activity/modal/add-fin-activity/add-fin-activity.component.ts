@@ -40,7 +40,7 @@ export class AddFinActivityComponent {
     });
   }
 
-  onSubmit(): void {
+  onSubmit():void {
     if (this.form.valid) {
       const formData = this.form.value;
       console.log('Form Data:', formData); // Replace this with your service call to save the data
